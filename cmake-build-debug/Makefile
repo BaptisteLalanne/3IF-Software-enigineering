@@ -142,6 +142,114 @@ ProjetCapteur/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\ProjetCapteur.dir\build.make CMakeFiles/ProjetCapteur.dir/build
 .PHONY : ProjetCapteur/fast
 
+Capteur.obj: Capteur.cpp.obj
+
+.PHONY : Capteur.obj
+
+# target to build an object file
+Capteur.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\ProjetCapteur.dir\build.make CMakeFiles/ProjetCapteur.dir/Capteur.cpp.obj
+.PHONY : Capteur.cpp.obj
+
+Capteur.i: Capteur.cpp.i
+
+.PHONY : Capteur.i
+
+# target to preprocess a source file
+Capteur.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\ProjetCapteur.dir\build.make CMakeFiles/ProjetCapteur.dir/Capteur.cpp.i
+.PHONY : Capteur.cpp.i
+
+Capteur.s: Capteur.cpp.s
+
+.PHONY : Capteur.s
+
+# target to generate assembly for a file
+Capteur.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\ProjetCapteur.dir\build.make CMakeFiles/ProjetCapteur.dir/Capteur.cpp.s
+.PHONY : Capteur.cpp.s
+
+Mesure.obj: Mesure.cpp.obj
+
+.PHONY : Mesure.obj
+
+# target to build an object file
+Mesure.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\ProjetCapteur.dir\build.make CMakeFiles/ProjetCapteur.dir/Mesure.cpp.obj
+.PHONY : Mesure.cpp.obj
+
+Mesure.i: Mesure.cpp.i
+
+.PHONY : Mesure.i
+
+# target to preprocess a source file
+Mesure.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\ProjetCapteur.dir\build.make CMakeFiles/ProjetCapteur.dir/Mesure.cpp.i
+.PHONY : Mesure.cpp.i
+
+Mesure.s: Mesure.cpp.s
+
+.PHONY : Mesure.s
+
+# target to generate assembly for a file
+Mesure.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\ProjetCapteur.dir\build.make CMakeFiles/ProjetCapteur.dir/Mesure.cpp.s
+.PHONY : Mesure.cpp.s
+
+Service.obj: Service.cpp.obj
+
+.PHONY : Service.obj
+
+# target to build an object file
+Service.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\ProjetCapteur.dir\build.make CMakeFiles/ProjetCapteur.dir/Service.cpp.obj
+.PHONY : Service.cpp.obj
+
+Service.i: Service.cpp.i
+
+.PHONY : Service.i
+
+# target to preprocess a source file
+Service.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\ProjetCapteur.dir\build.make CMakeFiles/ProjetCapteur.dir/Service.cpp.i
+.PHONY : Service.cpp.i
+
+Service.s: Service.cpp.s
+
+.PHONY : Service.s
+
+# target to generate assembly for a file
+Service.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\ProjetCapteur.dir\build.make CMakeFiles/ProjetCapteur.dir/Service.cpp.s
+.PHONY : Service.cpp.s
+
+Utilisateur.obj: Utilisateur.cpp.obj
+
+.PHONY : Utilisateur.obj
+
+# target to build an object file
+Utilisateur.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\ProjetCapteur.dir\build.make CMakeFiles/ProjetCapteur.dir/Utilisateur.cpp.obj
+.PHONY : Utilisateur.cpp.obj
+
+Utilisateur.i: Utilisateur.cpp.i
+
+.PHONY : Utilisateur.i
+
+# target to preprocess a source file
+Utilisateur.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\ProjetCapteur.dir\build.make CMakeFiles/ProjetCapteur.dir/Utilisateur.cpp.i
+.PHONY : Utilisateur.cpp.i
+
+Utilisateur.s: Utilisateur.cpp.s
+
+.PHONY : Utilisateur.s
+
+# target to generate assembly for a file
+Utilisateur.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\ProjetCapteur.dir\build.make CMakeFiles/ProjetCapteur.dir/Utilisateur.cpp.s
+.PHONY : Utilisateur.cpp.s
+
 main.obj: main.cpp.obj
 
 .PHONY : main.obj
@@ -178,6 +286,18 @@ help:
 	@echo ... edit_cache
 	@echo ... rebuild_cache
 	@echo ... ProjetCapteur
+	@echo ... Capteur.obj
+	@echo ... Capteur.i
+	@echo ... Capteur.s
+	@echo ... Mesure.obj
+	@echo ... Mesure.i
+	@echo ... Mesure.s
+	@echo ... Service.obj
+	@echo ... Service.i
+	@echo ... Service.s
+	@echo ... Utilisateur.obj
+	@echo ... Utilisateur.i
+	@echo ... Utilisateur.s
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s

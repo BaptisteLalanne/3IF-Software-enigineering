@@ -1,0 +1,8 @@
+Problème de lecture des données, merci de vérifier le chemin d'accès et son contenu
+Rappel d'un contenu de fichier valide:
+    - attributes.csv
+    - cleaners.csv
+    - mesurements.csv
+    - providers.csv
+    - sensors.csv
+    - users.csv

@@ -6,7 +6,27 @@
 
 #IncludeRegexTransform: 
 
-C:/Users/Rami EL RIFAI/Desktop/INSA Lyon/IF/GL/ProjetCapteur/main.cpp
+C:/Users/Rami EL RIFAI/Desktop/INSA Lyon/IF/GL/ProjetCapteur/Capteur.cpp
 iostream
+-
+algorithm
+-
+Capteur.h
+C:/Users/Rami EL RIFAI/Desktop/INSA Lyon/IF/GL/ProjetCapteur/Capteur.h
+
+C:/Users/Rami EL RIFAI/Desktop/INSA Lyon/IF/GL/ProjetCapteur/Capteur.h
+list
+-
+string
+-
+ostream
+-
+Mesure.h
+C:/Users/Rami EL RIFAI/Desktop/INSA Lyon/IF/GL/ProjetCapteur/Mesure.h
+
+C:/Users/Rami EL RIFAI/Desktop/INSA Lyon/IF/GL/ProjetCapteur/Mesure.h
+string
+-
+ostream
 -
 

@@ -1,4 +1,8 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/ProjetCapteur.dir/Capteur.cpp.obj"
+  "CMakeFiles/ProjetCapteur.dir/Mesure.cpp.obj"
+  "CMakeFiles/ProjetCapteur.dir/Service.cpp.obj"
+  "CMakeFiles/ProjetCapteur.dir/Utilisateur.cpp.obj"
   "CMakeFiles/ProjetCapteur.dir/main.cpp.obj"
   "ProjetCapteur.exe"
   "ProjetCapteur.exe.manifest"
