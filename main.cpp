@@ -45,65 +45,94 @@ void effectuerMoyenne(){
 */
 Service service = Service();
 
-void initialiserDonnees(const string dataset) {
+void initialiserUser(ifstream fluxLectureUsers) {
+    string strLigne, id, idCapteur;
 
+    while(!fluxLectureUsers.eof()) {
+        getline(fluxLectureUsers, id, ';');
+        getline(fluxLectureUsers, idCapteur, ';');
+        getline(fluxLectureUsers, strLigne);
+        Utilisateur user = Utilisateur(id);
+        service.addListeUtilisateurs(user);
+        service.getListeCapteurs().back().addMesure(mesure);
+
+
+    }
+}
+
+bool initialiserDonnees(const string dataset) {
+    cout << "Accès aux données..." << endl;
     string nomFichier = dataset + "/measurements.csv";
     string fichierCapteurs = dataset + "/sensors.csv";
-    ifstream fluxLecture, fluxLectureCapteurs;
-    fluxLecture.open(nomFichier);
+    string fichierUtilisateur = dataset + "/users.csv";
+    ifstream fluxLectureMesures, fluxLectureCapteurs, fluxLectureUsers;
+    fluxLectureUsers.open(fichierUtilisateur);
+    fluxLectureMesures.open(nomFichier);
     fluxLectureCapteurs.open(fichierCapteurs);
-    string strLigne, date, id, idAjoute, datePrev, ozone, soufre, azote, PM, sensorID, buffer, derniereMesure;
-    bool premierCapteurVu = false;
-    double latitude, longitude;
-    Capteur *capteur = nullptr;
-    size_t offset = 0;
-    while (!fluxLecture.eof()) {
-        getline(fluxLecture, date, ' '); //date initialisée
-        getline(fluxLecture, strLigne, ';');
-        getline(fluxLecture, id, ';'); //id initialisé
-        if (idAjoute != id) {
-            if (premierCapteurVu) {
-                capteur->setDerniereMesure(datePrev);
-            } else {
-                premierCapteurVu = true;
+    if(fluxLectureUsers.is_open() && fluxLectureMesures.is_open() && fluxLectureCapteurs.is_open()){
+        string strLigne, date, id, idAjoute, datePrev, ozone, soufre, azote, PM, sensorID, buffer, derniereMesure;
+        bool premierCapteurVu = false;
+        double latitude, longitude;
+        Capteur *capteur = nullptr;
+        size_t offset = 0;
+        while (!fluxLectureMesures.eof()) {
+            getline(fluxLectureMesures, date, ' '); //date initialisée
+            getline(fluxLectureMesures, strLigne, ';');
+            getline(fluxLectureMesures, id, ';'); //id initialisé
+            if (idAjoute != id) {
+                if (premierCapteurVu) {
+                    capteur->setDerniereMesure(datePrev);
+                } else {
+                    premierCapteurVu = true;
+                }
+
+                getline(fluxLectureCapteurs, sensorID, ';');
+                getline(fluxLectureCapteurs, buffer, ';');
+                latitude = stod(buffer, &offset);
+                getline(fluxLectureCapteurs, buffer, ';');
+                longitude = stod(buffer, &offset);
+                getline(fluxLectureCapteurs, buffer); //aller à la ligne suivante
+                Capteur c = Capteur(sensorID, longitude, latitude, false, date);
+                capteur = &c;
+                service.addListeCapteurs(c);
+
+                idAjoute = id;
             }
 
-            getline(fluxLectureCapteurs, sensorID, ';');
-            getline(fluxLectureCapteurs, buffer, ';');
-            latitude = stod(buffer, &offset);
-            getline(fluxLectureCapteurs, buffer, ';');
-            longitude = stod(buffer, &offset);
-            getline(fluxLectureCapteurs, buffer); //aller à la ligne suivante
-            Capteur c = Capteur(sensorID, longitude, latitude, false, date);
-            capteur = &c;
-            service.listeCapteurs.push_back(*capteur);
+            datePrev = date;
+            getline(fluxLectureMesures, strLigne, ';');
+            getline(fluxLectureMesures, ozone, ';');
+            getline(fluxLectureMesures, strLigne);
+            getline(fluxLectureMesures, strLigne, 'N');
+            getline(fluxLectureMesures, strLigne, ';');
+            getline(fluxLectureMesures, azote, ';');
+            getline(fluxLectureMesures, strLigne);
+            getline(fluxLectureMesures, strLigne, 'O');
+            getline(fluxLectureMesures, strLigne, ';');
+            getline(fluxLectureMesures, soufre, ';');
+            getline(fluxLectureMesures, strLigne);
+            getline(fluxLectureMesures, strLigne, 'P');
+            getline(fluxLectureMesures, strLigne, ';');
+            getline(fluxLectureMesures, PM, ';');
 
-            idAjoute = id;
+            Mesure mesure = Mesure(date, id, stod(PM, &offset), stod(ozone, &offset), stod(soufre, &offset),
+                                   stod(azote, &offset));
+
+            service.getListeCapteurs().back().addMesure(mesure);
+
+            getline(fluxLecture, strLigne);
         }
-
-        datePrev = date;
-        getline(fluxLecture, strLigne, ';');
-        getline(fluxLecture, ozone, ';');
-        getline(fluxLecture, strLigne);
-        getline(fluxLecture, strLigne, 'N');
-        getline(fluxLecture, strLigne, ';');
-        getline(fluxLecture, azote, ';');
-        getline(fluxLecture, strLigne);
-        getline(fluxLecture, strLigne, 'O');
-        getline(fluxLecture, strLigne, ';');
-        getline(fluxLecture, soufre, ';');
-        getline(fluxLecture, strLigne);
-        getline(fluxLecture, strLigne, 'P');
-        getline(fluxLecture, strLigne, ';');
-        getline(fluxLecture, PM, ';');
-
-        Mesure mesure = Mesure(date, id, stod(PM, &offset), stod(ozone, &offset), stod(soufre, &offset),
-                               stod(azote, &offset));
-        capteur->addMesure(mesure);
-
-        getline(fluxLecture, strLigne);
+        capteur->setDerniereMesure(date);
+        initialiserUser(fluxLectureUsers);
+    }else{
+        cerr <<"Problème de lecture des données, merci de vérifier le chemin d'accès et son contenu\n"
+               "Rappel d'un contenu de fichier valide:\n"
+               "    - mesurements.csv\n"
+               "    - sensors.csv\n"
+               "    - users.csv";
+        return false;
     }
-    capteur->setDerniereMesure(date);
+    return true;
 
 }
 
@@ -140,7 +169,6 @@ void menuGeneral()
                 cout << "Votre choix est incorrect. Pour rappel, vous avez ces possibilités: 0,1"<<endl;
         }
     }while (choix_user !='0');
-    return;
 } //-------------------------------------------------------------------------- Fin de menuGénéral
 
 
@@ -153,10 +181,22 @@ void afficher(string chaine){
 
 
 int main(int argc, char *argv[]) {
-    initialiserDonnees(argv[1]);
-    for(auto & capteur : service.listeCapteurs) {
-        cout << capteur << endl;
+    if(argc != 2) {
+        cerr << "Problème de lecture des données, merci de vérifier le chemin d'accès et son contenu\n"
+                "Rappel d'un contenu de fichier valide:\n"
+                "    - mesurements.csv\n"
+                "    - sensors.csv\n"
+                "    - users.csv";
     }
+    if(!initialiserDonnees(argv[1])){
+        return 1;
+    }
+    cout<<"Données ajoutées avec succés!"<<endl;
+    /*
+    for(auto & capteur : service.getListeCapteurs()) {
+        cout << capteur << endl;
+        capteur.afficherListeMesures();
+    }*/
     menuGeneral();
     return 0;
 }

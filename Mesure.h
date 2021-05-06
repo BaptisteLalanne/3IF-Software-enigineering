@@ -9,11 +9,7 @@ class Mesure
 public:
     int calculerIndice();
 
-    virtual ~Mesure();
-
-    const string& getDateMesure() const;
-
-    Mesure(const string &laDate, string idMesure, double concentrationPM, double concentrationOzone, double concentartionDioxydeSoufre, double concentrationDioxydeAzote);
+    const string &getId() const;
 
     void setDateMesure(const string &dateMesure);
 
@@ -21,17 +17,23 @@ public:
 
     void setOzone(double ozone);
 
-    double getDioxydeSoufre() const;
-
-    void setDioxydeSoufre(double dioxydeSoufre);
-
     double getDioxydeAzote() const;
 
     void setDioxydeAzote(double dioxydeAzote);
 
+    double getDioxydeSoufre() const;
+
+    void setDioxydeSoufre(double dioxydeSoufre);
+
     double getParticulesFines() const;
 
     void setParticulesFines(double particulesFines);
+
+    virtual ~Mesure();
+
+    const string& getDateMesure() const;
+
+    Mesure(const string &laDate, string idMesure, double concentrationPM, double concentrationOzone, double concentartionDioxydeSoufre, double concentrationDioxydeAzote);
 
     friend ostream &operator<<(ostream &os, const Mesure &mesure);
 

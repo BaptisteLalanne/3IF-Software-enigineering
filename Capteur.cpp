@@ -53,7 +53,13 @@ Mesure* Capteur::obtenirMesureDate(string &date) const {
 ostream &operator<<(ostream &os, const Capteur &capteur) {
     os << "capteurID: " << capteur.capteurID << " fiable: " << capteur.fiable << " longitude: " << capteur.longitude
        << " latitude: " << capteur.latitude << " capteurPrive: " << capteur.capteurPrive << " premiereMesure: "
-       << capteur.premiereMesure << " derniereMesure: " << capteur.derniereMesure << "";
+       << capteur.premiereMesure  << " derniereMesure: " << capteur.derniereMesure;
     return os;
 }
 
+void Capteur::afficherListeMesures() {
+    cout << listeMesures.empty() << endl;
+    for(list<Mesure>::iterator it = listeMesures.begin(); it != listeMesures.end(); it++) {
+        cout << *it << endl;
+    }
+}

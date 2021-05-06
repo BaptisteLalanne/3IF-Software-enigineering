@@ -25,12 +25,11 @@ using namespace std;
 
 
 
-Utilisateur::Utilisateur (string utilisateurID)
-{
+Utilisateur::Utilisateur(const string & utilisateurID) {
     Utilisateur::utilisateurID = utilisateurID;
     points = 0;
     gagnePoints = true;
-} //----- Fin de Utilisateur
+}
 
 
 Utilisateur::~Utilisateur ( )

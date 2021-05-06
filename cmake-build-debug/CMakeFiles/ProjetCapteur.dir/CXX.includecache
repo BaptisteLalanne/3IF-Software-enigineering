@@ -6,14 +6,6 @@
 
 #IncludeRegexTransform: 
 
-C:/Users/Rami EL RIFAI/Desktop/INSA Lyon/IF/GL/ProjetCapteur/Capteur.cpp
-iostream
--
-algorithm
--
-Capteur.h
-C:/Users/Rami EL RIFAI/Desktop/INSA Lyon/IF/GL/ProjetCapteur/Capteur.h
-
 C:/Users/Rami EL RIFAI/Desktop/INSA Lyon/IF/GL/ProjetCapteur/Capteur.h
 list
 -
@@ -28,5 +20,35 @@ C:/Users/Rami EL RIFAI/Desktop/INSA Lyon/IF/GL/ProjetCapteur/Mesure.h
 string
 -
 ostream
+-
+
+C:/Users/Rami EL RIFAI/Desktop/INSA Lyon/IF/GL/ProjetCapteur/Service.h
+list
+-
+Capteur.h
+C:/Users/Rami EL RIFAI/Desktop/INSA Lyon/IF/GL/ProjetCapteur/Capteur.h
+Mesure.h
+C:/Users/Rami EL RIFAI/Desktop/INSA Lyon/IF/GL/ProjetCapteur/Mesure.h
+Utilisateur.h
+C:/Users/Rami EL RIFAI/Desktop/INSA Lyon/IF/GL/ProjetCapteur/Utilisateur.h
+
+C:/Users/Rami EL RIFAI/Desktop/INSA Lyon/IF/GL/ProjetCapteur/Utilisateur.h
+string
+-
+
+C:/Users/Rami EL RIFAI/Desktop/INSA Lyon/IF/GL/ProjetCapteur/main.cpp
+iostream
+-
+string
+-
+Service.h
+C:/Users/Rami EL RIFAI/Desktop/INSA Lyon/IF/GL/ProjetCapteur/Service.h
+fstream
+-
+stdio.h
+-
+cstdio
+-
+cstdlib
 -
 

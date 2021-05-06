@@ -3,6 +3,7 @@
 #define PROJETCAPTEUR_UTILISATEUR_H
 
 #include <string>
+#include "Capteur.h"
 
 class Utilisateur
 {
@@ -30,13 +31,8 @@ public:
     // Contrat :
     //
 
-    Utilisateur ();
-    // Mode d'emploi :
-    //
-    // Contrat :
-    //
 
-    Utilisateur(const string utilisateurID);
+    Utilisateur(const string & utilisateurID);
 
     virtual ~Utilisateur ( );
     // Mode d'emploi :
@@ -53,6 +49,7 @@ private:
     string utilisateurID;
     int points;
     bool gagnePoints;
+    list<Capteur> listeCapteurs;
 };
 
 //-------------------------------- Autres définitions dépendantes de <Utilisateur>

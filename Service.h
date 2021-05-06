@@ -46,19 +46,34 @@ public:
     double obtenirDensiteRegion(list<Capteur> listeCapteurs, double longitude, double latitude);
 */
 
+    void addListeCapteurs(Capteur & capteur) {
+        listeCapteurs.push_back(capteur);
+    }
+
+    list<Capteur>& getListeCapteurs() {
+        return listeCapteurs;
+    }
+
+    void addListeUtilisateurs(Utilisateur & utilisateur) {
+        listeUtilisateurs.push_back(utilisateur);
+    }
+
+    list<Utilisateur>& getListeUtilisateurs() {
+        return listeUtilisateurs;
+    }
+
     Service ();
 
     virtual ~Service ( );
 
 //------------------------------------------------------------------ PRIVE
-    list<Capteur> listeCapteurs;
-    list<Utilisateur> listeUtilisateurs;
-    list<Mesure> listeDonnees;
+
 private:
 //----------------------------------------------------- Méthodes protégées
 
 //----------------------------------------------------- Attributs protégés
-
+    list<Capteur> listeCapteurs;
+    list<Utilisateur> listeUtilisateurs;
 
 };
 

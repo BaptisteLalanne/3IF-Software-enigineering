@@ -17,6 +17,13 @@ public:
 
     void desactiverCapteur();
 
+    double getLongitude() {
+        return longit;}
+        double getLatitude(){
+        return latitude;
+    }
+
+
     void setDerniereMesure(string &derniereMes) {
         derniereMesure = derniereMes;
     }
@@ -25,11 +32,17 @@ public:
         listeMesures.push_back(mesure);
     }
 
-    friend ostream &operator<<(ostream &os, const Capteur &capteur);
+    list<Mesure>& getListeMesures() {
+        return listeMesures;
+    }
 
     Capteur(const string &capteurId, double longitude, double latitude, bool capteurPrive, const string &premiereMesure);
 
     virtual ~Capteur ( );
+
+    friend ostream &operator<<(ostream &os, const Capteur &capteur);
+
+    void afficherListeMesures();
 
 private:
     string capteurID;
