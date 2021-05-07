@@ -80,6 +80,30 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="C:/Users/Rami EL RIFAI/Desktop/INSA Lyon/IF/GL/ProjetCapteur/Capteur.cpp">
+			<Option target="ProjetCapteur"/>
+		</Unit>
+		<Unit filename="C:/Users/Rami EL RIFAI/Desktop/INSA Lyon/IF/GL/ProjetCapteur/Capteur.h">
+			<Option target="ProjetCapteur"/>
+		</Unit>
+		<Unit filename="C:/Users/Rami EL RIFAI/Desktop/INSA Lyon/IF/GL/ProjetCapteur/Mesure.cpp">
+			<Option target="ProjetCapteur"/>
+		</Unit>
+		<Unit filename="C:/Users/Rami EL RIFAI/Desktop/INSA Lyon/IF/GL/ProjetCapteur/Mesure.h">
+			<Option target="ProjetCapteur"/>
+		</Unit>
+		<Unit filename="C:/Users/Rami EL RIFAI/Desktop/INSA Lyon/IF/GL/ProjetCapteur/Service.cpp">
+			<Option target="ProjetCapteur"/>
+		</Unit>
+		<Unit filename="C:/Users/Rami EL RIFAI/Desktop/INSA Lyon/IF/GL/ProjetCapteur/Service.h">
+			<Option target="ProjetCapteur"/>
+		</Unit>
+		<Unit filename="C:/Users/Rami EL RIFAI/Desktop/INSA Lyon/IF/GL/ProjetCapteur/Utilisateur.cpp">
+			<Option target="ProjetCapteur"/>
+		</Unit>
+		<Unit filename="C:/Users/Rami EL RIFAI/Desktop/INSA Lyon/IF/GL/ProjetCapteur/Utilisateur.h">
+			<Option target="ProjetCapteur"/>
+		</Unit>
 		<Unit filename="C:/Users/Rami EL RIFAI/Desktop/INSA Lyon/IF/GL/ProjetCapteur/main.cpp">
 			<Option target="ProjetCapteur"/>
 		</Unit>
