@@ -55,17 +55,23 @@ Capteur * trouverCapteur(string &id) {
 }
 
 void initialiserUser(ifstream &fluxLectureUsers) {
-    string strLigne, id, idCapteur;
+    string strLigne, id, idCapteur, beforeId;
     while(!fluxLectureUsers.eof()) {
         getline(fluxLectureUsers, id, ';');
-        Utilisateur user = Utilisateur(id);
+        Utilisateur user = Utilisateur(beforeId + id);
         getline(fluxLectureUsers, idCapteur, ';');
         while(idCapteur.find("Sensor") != string::npos) {
             user.addCapteur(*trouverCapteur(idCapteur));
-            getline(fluxLectureUsers, idCapteur, ';');
+            char c = char(fluxLectureUsers.get());
+            if(c == '\n') {
+                beforeId = char(fluxLectureUsers.get());
+                break;
+            } else {
+                getline(fluxLectureUsers, idCapteur, ';');
+                idCapteur = c + idCapteur;
+            }
         }
         service.addListeUtilisateurs(user);
-        getline(fluxLectureUsers, strLigne);
     }
 }
 
