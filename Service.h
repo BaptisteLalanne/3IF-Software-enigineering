@@ -36,7 +36,7 @@ public:
 /*
     void seConnecter(string utilisateurID);
 
-    void verifierFonctionnementCapteur();
+
 
     int calculerMoyenneQualiteAir(double Longitude, double Latitude, double rayon, string dateDebut, string dateFin);
 
@@ -46,6 +46,7 @@ public:
     double obtenirDensiteRegion(list<Capteur> listeCapteurs, double longitude, double latitude);
 */
 
+    //void verifierFonctionnementCapteur();
     void addListeCapteurs(Capteur & capteur) {
         listeCapteurs.push_back(capteur);
     }
