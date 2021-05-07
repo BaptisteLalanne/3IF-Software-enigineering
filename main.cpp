@@ -45,18 +45,27 @@ void effectuerMoyenne(){
 */
 Service service = Service();
 
-void initialiserUser(ifstream fluxLectureUsers) {
-    string strLigne, id, idCapteur;
+Capteur * trouverCapteur(string &id) {
+    for(list<Capteur>::iterator it = service.getListeCapteurs().begin(); it != service.getListeCapteurs().end(); it++) {
+        if(!it->getId().compare(id)) {
+            return &*it;
+        }
+    }
+    return nullptr;
+}
 
+void initialiserUser(ifstream &fluxLectureUsers) {
+    string strLigne, id, idCapteur;
     while(!fluxLectureUsers.eof()) {
         getline(fluxLectureUsers, id, ';');
-        getline(fluxLectureUsers, idCapteur, ';');
-        getline(fluxLectureUsers, strLigne);
         Utilisateur user = Utilisateur(id);
+        getline(fluxLectureUsers, idCapteur, ';');
+        while(idCapteur.find("Sensor") != string::npos) {
+            user.addCapteur(*trouverCapteur(idCapteur));
+            getline(fluxLectureUsers, idCapteur, ';');
+        }
         service.addListeUtilisateurs(user);
-        service.getListeCapteurs().back().addMesure(mesure);
-
-
+        getline(fluxLectureUsers, strLigne);
     }
 }
 
@@ -92,7 +101,7 @@ bool initialiserDonnees(const string dataset) {
                 getline(fluxLectureCapteurs, buffer, ';');
                 longitude = stod(buffer, &offset);
                 getline(fluxLectureCapteurs, buffer); //aller à la ligne suivante
-                Capteur c = Capteur(sensorID, longitude, latitude, false, date);
+                Capteur c = Capteur(sensorID, longitude, latitude, date);
                 capteur = &c;
                 service.addListeCapteurs(c);
 
@@ -119,10 +128,10 @@ bool initialiserDonnees(const string dataset) {
                                    stod(azote, &offset));
 
             service.getListeCapteurs().back().addMesure(mesure);
-
-            getline(fluxLecture, strLigne);
+            getline(fluxLectureMesures, strLigne);
         }
         capteur->setDerniereMesure(date);
+
         initialiserUser(fluxLectureUsers);
     }else{
         cerr <<"Problème de lecture des données, merci de vérifier le chemin d'accès et son contenu\n"
@@ -141,7 +150,6 @@ bool initialiserDonnees(const string dataset) {
 void menuGeneral()
 {
     char choix_user;
-    string info_user;
     double donnee_user;
 
     cout << "Bienvenue dans le Menu Principal"<<endl;
@@ -192,11 +200,16 @@ int main(int argc, char *argv[]) {
         return 1;
     }
     cout<<"Données ajoutées avec succés!"<<endl;
-    /*
+
     for(auto & capteur : service.getListeCapteurs()) {
         cout << capteur << endl;
-        capteur.afficherListeMesures();
-    }*/
+        //capteur.afficherListeMesures();
+    }
+
+    for(auto & user : service.getListeUtilisateurs()) {
+        cout << user << endl;
+        user.afficherCapteurs();
+    }
     menuGeneral();
     return 0;
 }

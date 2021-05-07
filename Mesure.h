@@ -31,7 +31,9 @@ public:
 
     virtual ~Mesure();
 
-    const string& getDateMesure() const;
+    const string& getDateMesure(){
+        return dateMesure;
+    }
 
     Mesure(const string &laDate, string idMesure, double concentrationPM, double concentrationOzone, double concentartionDioxydeSoufre, double concentrationDioxydeAzote);
 

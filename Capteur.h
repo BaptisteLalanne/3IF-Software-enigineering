@@ -6,6 +6,8 @@
 #include <ostream>
 #include "Mesure.h"
 
+class Utilisateur;
+
 class Capteur
 {
 
@@ -17,12 +19,21 @@ public:
 
     void desactiverCapteur();
 
+    string getId() {
+        return capteurID;
+    }
+
     double getLongitude() {
-        return longit;}
+        return longitude;}
+
+
         double getLatitude(){
         return latitude;
     }
 
+    void setUtilisateur(Utilisateur * utilisateur) {
+        utilisateurPrive = utilisateur;
+    }
 
     void setDerniereMesure(string &derniereMes) {
         derniereMesure = derniereMes;
@@ -34,9 +45,13 @@ public:
 
     list<Mesure>& getListeMesures() {
         return listeMesures;
+}
+
+    Utilisateur* getUtilisateurPrive(){
+        return utilisateurPrive;
     }
 
-    Capteur(const string &capteurId, double longitude, double latitude, bool capteurPrive, const string &premiereMesure);
+    Capteur(const string &capteurId, double longitude, double latitude, const string &premiereMesure);
 
     virtual ~Capteur ( );
 
@@ -49,7 +64,7 @@ private:
     bool fiable;
     double longitude;
     double latitude;
-    bool capteurPrive;
+    Utilisateur * utilisateurPrive;
     string premiereMesure;
     string derniereMesure;
     list<Mesure> listeMesures;

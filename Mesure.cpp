@@ -62,46 +62,9 @@ ostream &operator<<(ostream &os, const Mesure &mesure) {
     return os;
 }
 
-const string &Mesure::getId() const {
-    return id;
-}
 
-void Mesure::setDateMesure(const string &dateMesure) {
-    Mesure::dateMesure = dateMesure;
-}
 
-double Mesure::getOzone() const {
-    return ozone;
-}
 
-void Mesure::setOzone(double ozone) {
-    Mesure::ozone = ozone;
-}
 
-double Mesure::getDioxydeAzote() const {
-    return dioxydeAzote;
-}
 
-void Mesure::setDioxydeAzote(double dioxydeAzote) {
-    Mesure::dioxydeAzote = dioxydeAzote;
-}
 
-double Mesure::getDioxydeSoufre() const {
-    return dioxydeSoufre;
-}
-
-void Mesure::setDioxydeSoufre(double dioxydeSoufre) {
-    Mesure::dioxydeSoufre = dioxydeSoufre;
-}
-
-double Mesure::getParticulesFines() const {
-    return particulesFines;
-}
-
-void Mesure::setParticulesFines(double particulesFines) {
-    Mesure::particulesFines = particulesFines;
-}
-
-const string &Mesure::getDateMesure() const {
-    return dateMesure;
-}

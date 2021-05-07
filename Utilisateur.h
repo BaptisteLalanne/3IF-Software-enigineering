@@ -25,11 +25,6 @@ public:
     //
 
 //-------------------------------------------- Constructeurs - destructeur
-    Utilisateur ( const Utilisateur & unUtilisateur );
-    // Mode d'emploi (constructeur de copie) :
-    //
-    // Contrat :
-    //
 
 
     Utilisateur(const string & utilisateurID);
@@ -39,6 +34,12 @@ public:
     //
     // Contrat :
     //
+
+    void addCapteur(Capteur & capteur);
+
+    friend ostream &operator<<(ostream &os, const Utilisateur &utilisateur);
+
+    void afficherCapteurs();
 
 //------------------------------------------------------------------ PRIVE
 

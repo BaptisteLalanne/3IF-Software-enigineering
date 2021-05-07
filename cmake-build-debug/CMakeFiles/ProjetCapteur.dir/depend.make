@@ -14,6 +14,8 @@ CMakeFiles/ProjetCapteur.dir/Service.cpp.obj: ../Service.cpp
 CMakeFiles/ProjetCapteur.dir/Service.cpp.obj: ../Service.h
 CMakeFiles/ProjetCapteur.dir/Service.cpp.obj: ../Utilisateur.h
 
+CMakeFiles/ProjetCapteur.dir/Utilisateur.cpp.obj: ../Capteur.h
+CMakeFiles/ProjetCapteur.dir/Utilisateur.cpp.obj: ../Mesure.h
 CMakeFiles/ProjetCapteur.dir/Utilisateur.cpp.obj: ../Utilisateur.cpp
 CMakeFiles/ProjetCapteur.dir/Utilisateur.cpp.obj: ../Utilisateur.h
 

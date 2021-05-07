@@ -1,27 +1,8 @@
-/*************************************************************************
-                           Utilisateur  -  description
-                             -------------------
-    début                : 04/05/21
-    copyright            : (C) 2021 par Lalanne Baptiste, El Rifai Rami,
-	                 Rossello-Poulet Arthur, Bois Capucine
-*************************************************************************/
-
-//---------- Réalisation de la classe <Utilisateur> (fichier Utilisateur.cpp) ------------
-
-//---------------------------------------------------------------- INCLUDE
-
-//-------------------------------------------------------- Include système
 using namespace std;
 #include <iostream>
 
-//------------------------------------------------------ Include personnel
 #include "Utilisateur.h"
 
-//------------------------------------------------------------- Constantes
-
-//----------------------------------------------------------------- PUBLIC
-
-//-------------------------------------------- Constructeurs - destructeur
 
 
 
@@ -33,13 +14,29 @@ Utilisateur::Utilisateur(const string & utilisateurID) {
 
 
 Utilisateur::~Utilisateur ( )
-// Algorithme :
-//
 {
-#ifdef MAP
-    cout << "Appel au destructeur de <Utilisateur>" << endl;
-#endif
-} //----- Fin de ~Utilisateur
+
+}
+void Utilisateur::donnerPoints(){
+    points++;
+}
+void Utilisateur::addCapteur(Capteur & capteur) {
+    listeCapteurs.push_back(capteur);
+    capteur.setUtilisateur(this);
+}
+
+void Utilisateur::afficherCapteurs() {
+    for(list<Capteur>::iterator it = listeCapteurs.begin(); it != listeCapteurs.end(); it++) {
+        cout << *it << endl;
+    }
+}
+
+ostream &operator<<(ostream &os, const Utilisateur &utilisateur) {
+    os << "UserID: " << utilisateur.utilisateurID << " points: " << utilisateur.points;
+    return os;
+}
+
+
 
 
 //------------------------------------------------------------------ PRIVE
