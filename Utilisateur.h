@@ -18,12 +18,9 @@ public:
     // Contrat :
     //
 
-    void empecherGagnerPoints();
-    // Mode d'emploi :
-    //
-    // Contrat :
-    //
-
+    void empecherGagnerPoints() {
+        gagnePoints = false;
+    }
 //-------------------------------------------- Constructeurs - destructeur
 
 

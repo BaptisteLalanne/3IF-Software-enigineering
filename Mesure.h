@@ -9,32 +9,49 @@ class Mesure
 public:
     int calculerIndice();
 
-    const string &getId() const;
+    const string &getId() const {
+        return id;
+    }
 
-    void setDateMesure(const string &dateMesure);
+    void setDateMesure(const string &dateMesure) {
+        this->dateMesure = dateMesure;
+    }
 
-    double getOzone() const;
+    double getOzone() const {
+        return ozone;
+    }
 
-    void setOzone(double ozone);
+    void setOzone(double ozone) {
+        this->ozone = ozone;
+    };
 
-    double getDioxydeAzote() const;
+    double getDioxydeAzote() const{
+        return dioxydeAzote;
+    }
 
-    void setDioxydeAzote(double dioxydeAzote);
+    void setDioxydeAzote(double dioxydeAzote) {
+        this->dioxydeAzote = dioxydeAzote;
+    }
 
-    double getDioxydeSoufre() const;
+    double getDioxydeSoufre() const{
+            return dioxydeSoufre;
+    }
 
-    void setDioxydeSoufre(double dioxydeSoufre);
+    void setParticulesFines(double particulesFines) {
+        this->particulesFines = particulesFines;
+    }
 
-    double getParticulesFines() const;
-
-    void setParticulesFines(double particulesFines);
+    double getParticulesFines() const{
+        return particulesFines;
+    }
 
     virtual ~Mesure();
 
-    const string& getDateMesure(){
+    string & getDateMesure(){
         return dateMesure;
     }
 
+    Mesure();
     Mesure(const string &laDate, string idMesure, double concentrationPM, double concentrationOzone, double concentartionDioxydeSoufre, double concentrationDioxydeAzote);
 
     friend ostream &operator<<(ostream &os, const Mesure &mesure);

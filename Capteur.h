@@ -13,7 +13,7 @@ class Capteur
 
 public:
 
-    Mesure* obtenirMesureDate(string &date) const;
+    Mesure* obtenirMesureDate(string & date);
 
     double* obtenirMoyenne(string &dateDebut, string &dateFin) const;
 
@@ -21,6 +21,9 @@ public:
 
     string getId() {
         return capteurID;
+    }
+    bool getFiable() {
+        return fiable;
     }
 
     double getLongitude() {

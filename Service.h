@@ -16,6 +16,8 @@
 #include "Capteur.h"
 #include "Mesure.h"
 #include "Utilisateur.h"
+#include <iostream>
+using namespace std;
 
 //------------------------------------------------------------- Constantes
 
@@ -43,10 +45,10 @@ public:
 
     list<Capteur> obtenirCapteursRegion(double longitude, double latitude, string dateDeb, string dateFin, double rayonMax, double rayonMin);
 
-    double obtenirDensiteRegion(list<Capteur> listeCapteurs, double longitude, double latitude);
-*/
+    */
+    double obtenirDensiteRegion(list<Capteur> listeDesCapteurs,double longitude, double latitude, double rayonRegion);
+    void verifierFonctionnementCapteur();
 
-    //void verifierFonctionnementCapteur();
     void addListeCapteurs(Capteur & capteur) {
         listeCapteurs.push_back(capteur);
     }

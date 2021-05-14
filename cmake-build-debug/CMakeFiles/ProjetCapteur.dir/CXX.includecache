@@ -22,6 +22,16 @@ string
 ostream
 -
 
+C:/Users/Rami EL RIFAI/Desktop/INSA Lyon/IF/GL/ProjetCapteur/Service.cpp
+Service.h
+C:/Users/Rami EL RIFAI/Desktop/INSA Lyon/IF/GL/ProjetCapteur/Service.h
+cmath
+-
+chrono
+-
+thread
+-
+
 C:/Users/Rami EL RIFAI/Desktop/INSA Lyon/IF/GL/ProjetCapteur/Service.h
 list
 -
@@ -31,26 +41,12 @@ Mesure.h
 C:/Users/Rami EL RIFAI/Desktop/INSA Lyon/IF/GL/ProjetCapteur/Mesure.h
 Utilisateur.h
 C:/Users/Rami EL RIFAI/Desktop/INSA Lyon/IF/GL/ProjetCapteur/Utilisateur.h
+iostream
+-
 
 C:/Users/Rami EL RIFAI/Desktop/INSA Lyon/IF/GL/ProjetCapteur/Utilisateur.h
 string
 -
 Capteur.h
 C:/Users/Rami EL RIFAI/Desktop/INSA Lyon/IF/GL/ProjetCapteur/Capteur.h
-
-C:/Users/Rami EL RIFAI/Desktop/INSA Lyon/IF/GL/ProjetCapteur/main.cpp
-iostream
--
-string
--
-Service.h
-C:/Users/Rami EL RIFAI/Desktop/INSA Lyon/IF/GL/ProjetCapteur/Service.h
-fstream
--
-stdio.h
--
-cstdio
--
-cstdlib
--
 

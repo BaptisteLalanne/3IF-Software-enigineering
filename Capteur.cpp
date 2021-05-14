@@ -41,14 +41,16 @@ double* Capteur::obtenirMoyenne(string &dateDebut, string &dateFin) const {
 
     return moyenne;
 }*/
-/*
-Mesure* Capteur::obtenirMesureDate(string &date) const {
-    auto it = find_if(listeMesures.begin(), listeMesures.end(), [&date](const Mesure& mesure){return mesure.getDateMesure() == date;});
-    if(it != listeMesures.end()) {
-        return const_cast<Mesure *>(&*it);
+
+Mesure* Capteur::obtenirMesureDate(string & date) {
+    //auto it = std::find_if(listeMesures.begin(), listeMesures.end(), [](Mesure & obj, string & date){return obj.getDateMesure() == date;});
+    for (auto & mesure : listeMesures) {
+        if(mesure.getDateMesure() == date) {
+            return &mesure;
+        }
     }
     return nullptr;
-}*/
+}
 
 ostream &operator<<(ostream &os, const Capteur &capteur) {
     os << "capteurID: " << capteur.capteurID << " fiable: " << capteur.fiable << " longitude: " << capteur.longitude

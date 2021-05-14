@@ -3,6 +3,9 @@ using namespace std;
 
 #include "Mesure.h"
 
+Mesure::Mesure(){
+}
+
 Mesure::Mesure(const string &laDate, string idMesure, double concentrationPM, double concentrationOzone, double concentrationDioxydeSoufre, double concentartionDioxydeAzote)
 {
     dateMesure = laDate;

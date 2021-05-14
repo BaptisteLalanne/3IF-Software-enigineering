@@ -207,15 +207,24 @@ int main(int argc, char *argv[]) {
     }
     cout<<"Données ajoutées avec succés!"<<endl;
 
+    service.verifierFonctionnementCapteur();
+
+    int nonFiables = 0;
+
     for(auto & capteur : service.getListeCapteurs()) {
-        cout << capteur << endl;
+        //cout << capteur << endl;
+        if(!capteur.getFiable()) {
+            nonFiables++;
+        }
         //capteur.afficherListeMesures();
     }
 
+    cout << nonFiables << " capteurs non fiables" << endl;
+/*
     for(auto & user : service.getListeUtilisateurs()) {
         cout << user << endl;
         user.afficherCapteurs();
-    }
+    }*/
     menuGeneral();
     return 0;
 }
