@@ -92,6 +92,9 @@ bool initialiserDonnees(const string dataset) {
         size_t offset = 0;
         while (!fluxLectureMesures.eof()) {
             getline(fluxLectureMesures, date, ' '); //date initialisée
+            if (date == "") {
+                break;
+            }
             getline(fluxLectureMesures, strLigne, ';');
             getline(fluxLectureMesures, id, ';'); //id initialisé
             if (idAjoute != id) {
@@ -217,6 +220,10 @@ int main(int argc, char *argv[]) {
             nonFiables++;
         }
         //capteur.afficherListeMesures();
+        /*
+        for (auto & mesure : capteur.getListeMesures()) {
+            cout << capteur.getId() <<";" << mesure.getDateMesure() << ";" << mesure.calculerIndice() << endl;
+        }*/
     }
 
     cout << nonFiables << " capteurs non fiables" << endl;

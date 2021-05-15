@@ -7,4 +7,10 @@ Choississez parmi les propositions suivantes
 1: Calculer Moyenne
 0: Quitter
 Votre choix:
+Veuillez-renseigner les informations suivantes:
+Latitude :
+Longitude :
+Rayon :
+Date de début :
+Date de fin :
 A bientôt !

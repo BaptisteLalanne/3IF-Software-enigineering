@@ -1,1 +1,2 @@
-../../analog ../fichierInexistant.log
+../../main "../dataset-test"
+

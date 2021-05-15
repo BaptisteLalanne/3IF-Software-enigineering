@@ -1,0 +1,18 @@
+Veuillez-renseigner les informations suivantes:
+Latitude :
+Longitude :
+Rayon :
+Date de début :
+Date de fin :
+Attention, la zone sélectionnée n'est couverte par les capteurs qu'à
+
+
+rayonMesureCapteur=400
+tailleCarte=2*1*10^3=2000
+centreCapteurLongitude:(-1-(-1,1-1))*10^3=1100
+centreCapteurLatitude : (44-(43,9-1))*10^3=1100
+debutMesureCapteurLongitude = 1100-400=700
+finMesureCapteurLongitude= 1100+400=1500
+debutMesureCapteurLatitude=centreCapteurLatitude-rayonMesureCapteur=1100-400=700
+finMesureCapteurLatitude=centreCapteurLatitude+rayonMesureCapteur=1500
+stop à la ligne 202

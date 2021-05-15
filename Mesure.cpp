@@ -30,6 +30,7 @@ int Mesure::calculerIndice() {
         indice = 9;
     }
     else if(ozone>=180 || dioxydeSoufre>=300 || dioxydeAzote>=200 || particulesFines>=50) {
+        indice = 8;
     }
     else if(ozone>=150 || dioxydeSoufre>=250 || dioxydeAzote>=165 || particulesFines>=42) {
         indice = 7;

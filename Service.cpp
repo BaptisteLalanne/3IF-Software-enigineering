@@ -24,21 +24,24 @@ void Service::verifierFonctionnementCapteur() {
     Mesure * moyenneDate;
     double moyenneDateTab[4];
     int nombreDonneesComparaison;
-    const int differencePourFiabilite = 3;
-    const double rayonVerification = 0.8;
+    const int differencePourFiabilite = 2;
+    const double rayonVerification = 0.75;
+    const int nbVoisinsRequis = 2;
     Mesure * mesureMoyenne;
     list<Capteur> capteursProches;
     using std::chrono::high_resolution_clock;
     using std::chrono::duration_cast;
     using std::chrono::milliseconds;
 
-    auto t1 = high_resolution_clock::now();
+    //auto t1 = high_resolution_clock::now();
     for (auto & capteur : listeCapteurs){
 
         for(auto & capteur2 : listeCapteurs){
-            distanceCarreeEntreCapteurs = pow((capteur.getLongitude()-capteur2.getLongitude()),2) + pow((capteur.getLatitude()-capteur2.getLatitude()),2);
-            if(distanceCarreeEntreCapteurs <= pow(rayonVerification,2)) {
-                capteursProches.push_back(capteur2);
+            if(capteur2.getId() != capteur.getId()) {
+                distanceCarreeEntreCapteurs = pow((capteur.getLongitude() - capteur2.getLongitude()), 2) + pow((capteur.getLatitude() - capteur2.getLatitude()), 2);
+                if (distanceCarreeEntreCapteurs <= pow(rayonVerification, 2)) {
+                    capteursProches.push_back(capteur2);
+                }
             }
         }
 
@@ -56,22 +59,25 @@ void Service::verifierFonctionnementCapteur() {
                     moyenneDateTab[3]=moyenneDate->getDioxydeAzote();
                     for(int i=0;i<4;i++){
                         moyenne[i]+=moyenneDateTab[i];
-                        nombreDonneesComparaison ++;
                     }
+                    nombreDonneesComparaison ++;
                 }
             }
-            if(nombreDonneesComparaison >=2){
+            if(nombreDonneesComparaison >= nbVoisinsRequis){
                 for(int i=0; i<4; i++){
                     moyenne[i]/=nombreDonneesComparaison;
                 }
                 mesureMoyenne = new Mesure("", "", moyenne[0],moyenne[1], moyenne[2],moyenne[3]);
-                if((abs(mesureMoyenne->calculerIndice() - mesure.calculerIndice()))>differencePourFiabilite){
+
+                if(abs(mesureMoyenne->calculerIndice() - mesure.calculerIndice())>differencePourFiabilite){
                     capteur.desactiverCapteur();
                     if(capteur.getUtilisateurPrive()){
                         capteur.getUtilisateurPrive()->empecherGagnerPoints();
                         break;
                     }
                 }
+
+                delete mesureMoyenne;
             }else{
                 capteur.desactiverCapteur();
                 if(capteur.getUtilisateurPrive()!=nullptr){
@@ -82,10 +88,9 @@ void Service::verifierFonctionnementCapteur() {
         }
         capteursProches.clear();
     }
-    delete mesureMoyenne;
-    auto t2 = high_resolution_clock::now();
-    auto ms_int = duration_cast<milliseconds>(t2 - t1);
-    std::cout << ms_int.count() << "ms\n";
+    //auto t2 = high_resolution_clock::now();
+    //auto ms_int = duration_cast<milliseconds>(t2 - t1);
+    //std::cout << ms_int.count() << "ms\n";
 }
 
 
@@ -93,8 +98,15 @@ void Service::verifierFonctionnementCapteur() {
  *
 int Service::calculerMoyenneQualiteAir(double longitude, double latitude, double rayon, string dateDebut, string dateFin){
     double[4] moyenne;
+    for(int i=0; i<4; i++) {
+        moyenne[i]=0;
+    }
     int nombreCapteursValides;
     list<Capteur> capteursProches = obtenirCapteursRegion(longitude,latitude,rayon,dateDebut,dateFin);
+    if(capteursProches.empty()){
+        cerr << "Aucune donnée dans la zone ou au cours de la période sélectionnée" << endl;
+        return -1;
+    }
     double densite = obtenirDensiteRegion(capteursProches,longitude,latitude,rayon);
     for( const Capteur & capteur : lst){
         double* moyenneTousPolluants = capteur.obtenirMoyenne(dateDebut,dateFin);
@@ -117,10 +129,7 @@ int Service::calculerMoyenneQualiteAir(double longitude, double latitude, double
 
 
     if(densite > 0.5){
-        cout << "La moyenne dans la région est de "<< moyenne << endl;
-    }else if (densite == 0){
-        cerr << "Aucune données dans la zone sélectionnée << endl;
-        return -1;
+        cout << "L'indice ATMO dans la région est de "<< indiceRegion << endl;
     }else{
         cout << "Attention, la zone sélectionnée n'est couverte par les capteurs qu'à " << densite*100 <<"%. La moyenne
         est de" << moyenne <<endl;
