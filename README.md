@@ -36,7 +36,7 @@ sh maketest.sh
 Pour observer la validation des tests unitaires et de bout en bout, il est possible d'ouvrir le .csv crée ou tout simplement observé le passage des tests sur le terminal.
 
 
-**Pour les tests unitaires, il faut compiler tests.cpp et utiliser le menu dédié**
+**Pour les tests unitaires, il faut compiler tests.cpp**
 ```bash
 make test
 ```
