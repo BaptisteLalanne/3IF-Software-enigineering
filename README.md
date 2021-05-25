@@ -36,13 +36,11 @@ sh maketest.sh
 Pour observer la validation des tests unitaires et de bout en bout, il est possible d'ouvrir le .csv crée ou tout simplement observé le passage des tests sur le terminal.
 
 
-> Note: Le maketest.sh permet de tester des scénarios de bout en bout, pour tester les fonctions unitaires, il faut executer le programme tests
-
 **Pour les tests unitaires, il faut compiler tests.cpp et utiliser le menu dédié**
 ```bash
 make test
 ```
-
+> Note: Encore une fois, il est possible de modifier le chemin d'accès du dossier de donnée
 
 ## *Versions*
 Il y a peu de version car nous utilisons un IDE (CLion de JetBrains) pour coder en direct sur une même session. Nous faisons donc un commit par séance plutôt que un commit par features ou debug.
