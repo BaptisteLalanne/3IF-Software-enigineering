@@ -3,6 +3,8 @@
 #include <cmath>
 #include <chrono>
 #include <thread>
+#include <cstring>
+#include <sstream>
 
 Service::Service(){
 
@@ -12,10 +14,10 @@ Service::~Service() {
 
 }
 
-/*
-void Service::seConnecter(string utilisateurID) {
-
-}*/
+double Service::distanceDeuxPointsTerre(double latitudeA, double longitudeA,double latitudeB,double longitudeB){
+    int rayonTerre = 6373;
+    return rayonTerre*acos(sin(latitudeA)*sin(latitudeB)+cos(latitudeA)*cos(latitudeB)*cos(longitudeB-longitudeA));
+}
 
 void Service::verifierFonctionnementCapteur() {
 
@@ -38,7 +40,8 @@ void Service::verifierFonctionnementCapteur() {
 
         for(auto & capteur2 : listeCapteurs){
             if(capteur2.getId() != capteur.getId()) {
-                distanceCarreeEntreCapteurs = pow((capteur.getLongitude() - capteur2.getLongitude()), 2) + pow((capteur.getLatitude() - capteur2.getLatitude()), 2);
+                //distanceCarreeEntreCapteurs = pow(distanceDeuxPointsTerre(capteur2.getLatitude(),capteur2.getLongitude(),capteur.getLatitude(),capteur.getLongitude()),2);
+                distanceCarreeEntreCapteurs = pow((capteur.getLongitude()-capteur2.getLongitude()),2) + pow(capteur.getLatitude()-capteur2.getLatitude(), 2);
                 if (distanceCarreeEntreCapteurs <= pow(rayonVerification, 2)) {
                     capteursProches.push_back(capteur2);
                 }
@@ -94,89 +97,98 @@ void Service::verifierFonctionnementCapteur() {
 }
 
 
-/*
- *
-int Service::calculerMoyenneQualiteAir(double longitude, double latitude, double rayon, string dateDebut, string dateFin){
-    double[4] moyenne;
-    for(int i=0; i<4; i++) {
-        moyenne[i]=0;
+void Service::calculerMoyenneQualiteAir(double longitude, double latitude, double rayon, string dateDebut, string dateFin){
+    double moyenne[4];
+    int nombreCapteursValides = 0;
+    for (double & i : moyenne) {
+        i = 0;
     }
-    int nombreCapteursValides;
-    list<Capteur> capteursProches = obtenirCapteursRegion(longitude,latitude,rayon,dateDebut,dateFin);
+    list<Capteur> capteursProches = obtenirCapteursRegion(longitude, latitude, dateDebut, dateFin, 0, rayon);
     if(capteursProches.empty()){
         cerr << "Aucune donnée dans la zone ou au cours de la période sélectionnée" << endl;
-        return -1;
+        return;
     }
-    double densite = obtenirDensiteRegion(capteursProches,longitude,latitude,rayon);
-    for( const Capteur & capteur : lst){
+
+    for(Capteur & capteur : capteursProches){
         double* moyenneTousPolluants = capteur.obtenirMoyenne(dateDebut,dateFin);
         for(int i = 0 ; i < 4; i++ ){
             moyenne[i] = moyenne[i] + moyenneTousPolluants[i];
         }
         nombreCapteursValides++;
         if( capteur.getUtilisateurPrive() != nullptr ) {
-            capteur.getUtilisateurPrive().donnerPoints();
+            capteur.getUtilisateurPrive()->donnerPoints();
         }
     }
 
     //On fait la moyenne des concentrations
-    for(int j = 0; j<4; j++){
+    for(int i = 0; i<4; i++){
         moyenne[i]= moyenne[i]/ nombreCapteursValides;
     }
 
-    mesureMoyenne = new Mesure("", "", moyenne[0],moyenne[1], moyenne[2],moyenne[3]);
-    indiceRegion = mesureMoyenne.calculerIndice();
+    Mesure * mesureMoyenne = new Mesure("", "", moyenne[0],moyenne[1], moyenne[2],moyenne[3]);
+    int indiceRegion = (*mesureMoyenne).calculerIndice();
 
-
+    double densite = obtenirDensiteRegion(capteursProches,longitude,latitude,rayon);
     if(densite > 0.5){
         cout << "L'indice ATMO dans la région est de "<< indiceRegion << endl;
     }else{
-        cout << "Attention, la zone sélectionnée n'est couverte par les capteurs qu'à " << densite*100 <<"%. La moyenne
-        est de" << moyenne <<endl;
+        cout << "Attention, la zone sélectionnée n'est couverte par les capteurs qu'à " << densite*100 <<"%. La moyenne est de" << moyenne <<endl;
     }
 }
 
 
-list<Capteur> Service :: obtenirCapteursRegion(double longitude, double latitude, string dateDeb, string dateFin, double rayonMax, double rayonMin){
+bool comparerDates(const string date1, const string date2){
+    istringstream flux1(date1);
+    istringstream flux2(date2);
+    string jour1, jour2, mois1, mois2, annee1, annee2;
+    getline(flux1, jour1, '/');
+    getline(flux1, mois1, '/');
+    getline(flux1, annee1);
+    getline(flux2, jour2, '/');
+    getline(flux2, mois2, '/');
+    getline(flux2,annee2);
+
+    return(strcmp(annee1.c_str(),annee2.c_str())==-1 || (strcmp(annee1.c_str(), annee2.c_str())==0 && strcmp(mois1.c_str(), mois2.c_str())==-1) || (strcmp(annee1.c_str(), annee2.c_str())==0 && strcmp(mois1.c_str(), mois2.c_str())==-1 && (strcmp(jour1.c_str(), jour2.c_str())==-1 || strcmp(jour1.c_str(),jour2.c_str())==0) )) ;
+}
+
+
+list<Capteur> Service::obtenirCapteursRegion(double centreRegionLongitude, double centreRegionLatitude, string dateDebut, string dateFin, double rayonMaxRegion, double rayonMinRegion){
     Capteur * capteur;
-    double distanceCarreeCapteurRegion;
     list<double> tableauDistances;
     list<Capteur> listeCapteursRegion;
     for(auto & capteur : listeCapteurs){
         if(capteur.getFiable()) {
-            if(capteur.getPremiereMesure()<= dateDebut && capteur.getDateDerniereMesure()>=dateFin) {
-                distanceCarreeCapteurRegion=pow(capteur.getLongitude()-centreRegionLongitude,2)+pow(capteur.getLatitude()-centreRegionLatitude,2);
-                if(distanceCarreCapteurRegion>pow(rayonMinRegion,2) && distanceCarreeCapteurRegion<=pow(rayonMaxRegion,2)){
+            if(comparerDates(capteur.getPremiereMesure(),dateDebut) && comparerDates(capteur.getDerniereMesure(),dateFin)) {
+                double distanceCarreeCapteurRegion=pow(capteur.getLongitude()-centreRegionLongitude,2)+pow(capteur.getLatitude()-centreRegionLatitude,2);
+                if(distanceCarreeCapteurRegion>pow(rayonMinRegion,2) && distanceCarreeCapteurRegion<=pow(rayonMaxRegion,2)){
+                    list<Capteur>::iterator itCapteur = listeCapteursRegion.begin();
                     list<double>::iterator it;
-                    list<Capteur>::iterator itCapteur;
-                    it = tableauDistances.begin();
-                    itCapteur = listeCapteursRegion.begin();
-                    for(int i=0; i<tableauDistances.size(){
-                        if(tableauDistances.isEmpty() || distanceCarreeCapteurRegion<it) {
+                    for(it = tableauDistances.begin(); it != tableauDistances.end(); it++){
+                        if(tableauDistances.empty() || distanceCarreeCapteurRegion<*it) {
                             tableauDistances.insert(it,distanceCarreeCapteurRegion);
                             listeCapteursRegion.insert(itCapteur,capteur);
-                            it++;
-                            itCapteur++;
                             break;
                         }
+                        itCapteur++;
                     }
-                    if(i==tableauDistances.size()) {
-                        tableauDistances=push_back(distanceCarreeCapteurRegion);
-                        listeCapteursRegion = push_back(capteur);
+                    if(it==tableauDistances.end()) {
+                        tableauDistances.push_back(distanceCarreeCapteurRegion);
+                        listeCapteursRegion.push_back(capteur);
                     }
                 }
             }
         }
     }
+    return listeCapteursRegion;
 }
 
 
 double Service:: obtenirDensiteRegion(list<Capteur> listeDesCapteurs, double longitude, double latitude, double rayonRegion){ //centreRegionLongitude = longitude
-    int compteurPresenceCapteur=0;
-    int precision = 3;
-    int rayonMesureCapteur = 0.4*pow(10, precision);
-    double centreCapteurLongitude, centreCapteurLatitude, compteurZoneRegion;
-    int tailleCarte = 2*rayonRegion*pow(10, precision), debutMesureCapteurLongitude, finMesureCapteurLongitude, debutMesureCapteurLatitude, finMesureCapteurLatitude;
+    int compteurPresenceCapteur = 0;
+    const int precision = 3;
+    const int rayonMesureCapteur = 0.4*pow(10, precision);
+    int tailleCarte = 2*rayonRegion*pow(10, precision);
+    int debutMesureCapteurLongitude, finMesureCapteurLongitude, debutMesureCapteurLatitude, finMesureCapteurLatitude, centreCapteurLongitude, centreCapteurLatitude;
     bool carte[tailleCarte][tailleCarte];
     for (auto & capteur : listeDesCapteurs){
         centreCapteurLongitude = (capteur.getLongitude()-(longitude-rayonRegion))*pow(10, precision);
@@ -206,18 +218,18 @@ double Service:: obtenirDensiteRegion(list<Capteur> listeDesCapteurs, double lon
                     if(pow(i-rayonRegion,2)+pow(j-rayonRegion,2)<=pow(rayonRegion,2)) {
                         if(!carte[j][i]) {
                             carte[j][i]=true;
-                            compteurPresenceCapteur=compteurPresenceCapteur+1;
+                            compteurPresenceCapteur++;
                         }
                     }
                 }
             }
         }
     }
-    compteurZoneRegion=pow(tailleCarte,2)*3.14159*pow(rayonRegion,2)/(2*pow(rayonRegion,2));
+    double compteurZoneRegion=pow(tailleCarte,2)*M_PI*pow(rayonRegion,2)/(2*pow(rayonRegion,2));
     double densite = 100*compteurPresenceCapteur/compteurZoneRegion;
     return densite;
 
 }
-*/
+
 
 

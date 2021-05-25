@@ -47,12 +47,12 @@ public:
 
     virtual ~Mesure();
 
-    string & getDateMesure(){
+    string& getDateMesure(){
         return dateMesure;
     }
 
     Mesure();
-    Mesure(const string &laDate, string idMesure, double concentrationPM, double concentrationOzone, double concentartionDioxydeSoufre, double concentrationDioxydeAzote);
+    Mesure(const string &laDate, string idMesure, double concentrationPM, double concentrationOzone, double concentrationDioxydeSoufre, double concentrationDioxydeAzote);
 
     friend ostream &operator<<(ostream &os, const Mesure &mesure);
 

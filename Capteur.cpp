@@ -18,13 +18,27 @@ Capteur::~Capteur ( )
 void Capteur::desactiverCapteur() {
     fiable = false;
 }
-/*
-double* Capteur::obtenirMoyenne(string &dateDebut, string &dateFin) const {
-    double moyenne[4];
+
+double* Capteur::obtenirMoyenne(string &dateDebut, string &dateFin) {
+    double * moyenne;
     int nbMesures = 0;
 
-    auto itDebut = find_if(listeMesures.begin(), listeMesures.end(), [&dateDebut](const Mesure& mesure){return mesure.getDateMesure() == dateDebut;});
-    auto itFin = find_if(listeMesures.begin(), listeMesures.end(), [&dateFin](const Mesure& mesure){return mesure.getDateMesure() == dateFin;});
+    //auto itDebut = find_if(listeMesures.begin(), listeMesures.end(), [&dateDebut](const Mesure& mesure){return mesure.getDateMesure() == dateDebut;});
+    //auto itFin = find_if(listeMesures.begin(), listeMesures.end(), [&dateFin](const Mesure& mesure){return mesure.getDateMesure() == dateFin;});
+
+    list<Mesure>::iterator itDebut;
+    for (auto & mesure : listeMesures) {
+        if(mesure.getDateMesure() == dateDebut) {
+            *itDebut = mesure;
+        }
+    }
+
+    list<Mesure>::iterator itFin;
+    for(auto & mesureFin : listeMesures) {
+        if(mesureFin.getDateMesure() == dateFin) {
+            *itFin = mesureFin;
+        }
+    }
 
     for (auto it = itDebut; it != next(itFin); it++) {
         moyenne[0] += it->getOzone();
@@ -40,7 +54,7 @@ double* Capteur::obtenirMoyenne(string &dateDebut, string &dateFin) const {
     }
 
     return moyenne;
-}*/
+}
 
 Mesure* Capteur::obtenirMesureDate(string & date) {
     //auto it = std::find_if(listeMesures.begin(), listeMesures.end(), [](Mesure & obj, string & date){return obj.getDateMesure() == date;});

@@ -46,6 +46,7 @@ public:
     list<Capteur> obtenirCapteursRegion(double longitude, double latitude, string dateDeb, string dateFin, double rayonMax, double rayonMin);
 
     */
+    double distanceDeuxPointsTerre(double latitudeA, double longitudeA,double latitudeB,double longitudeB);
     double obtenirDensiteRegion(list<Capteur> listeDesCapteurs,double longitude, double latitude, double rayonRegion);
     void verifierFonctionnementCapteur();
 
@@ -65,6 +66,12 @@ public:
         return listeUtilisateurs;
     }
 
+    void calculerMoyenneQualiteAir(double longitude, double latitude, double rayon, string dateDebut, string dateFin);
+
+    list<Capteur>
+    obtenirCapteursRegion(double centreRegionLongitude, double centreRegionLatitude, string dateDebut, string dateFin,
+                          double rayonMaxRegion, double rayonMinRegion);
+
     Service ();
 
     virtual ~Service ( );
@@ -77,6 +84,8 @@ private:
 //----------------------------------------------------- Attributs protégés
     list<Capteur> listeCapteurs;
     list<Utilisateur> listeUtilisateurs;
+
+
 
 };
 

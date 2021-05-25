@@ -15,7 +15,7 @@ public:
 
     Mesure* obtenirMesureDate(string & date);
 
-    double* obtenirMoyenne(string &dateDebut, string &dateFin) const;
+    double* obtenirMoyenne(string &dateDebut, string &dateFin);
 
     void desactiverCapteur();
 
@@ -32,6 +32,14 @@ public:
 
         double getLatitude(){
         return latitude;
+    }
+
+    string getPremiereMesure(){
+        return premiereMesure;
+    }
+
+    string getDerniereMesure() {
+        return derniereMesure;
     }
 
     void setUtilisateur(Utilisateur * utilisateur) {
@@ -71,6 +79,8 @@ private:
     string premiereMesure;
     string derniereMesure;
     list<Mesure> listeMesures;
+
+
 };
 
 #endif

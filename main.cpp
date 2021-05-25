@@ -43,6 +43,7 @@ void effectuerMoyenne(){
 
 }
 */
+
 Service service = Service();
 
 Capteur * trouverCapteur(string &id) {
@@ -75,6 +76,44 @@ void initialiserUser(ifstream &fluxLectureUsers) {
     }
 }
 
+string* lireLigneMesures(ifstream &fluxLectureMesures) {
+    string strLigne, ozone, azote, soufre, PM;
+    static string tableauMesures[4];
+    getline(fluxLectureMesures,strLigne,';');
+    getline(fluxLectureMesures, ozone, ';');
+    getline(fluxLectureMesures, strLigne);
+    getline(fluxLectureMesures, strLigne, 'N');
+    getline(fluxLectureMesures, strLigne, ';');
+    getline(fluxLectureMesures, azote, ';');
+    getline(fluxLectureMesures, strLigne);
+    getline(fluxLectureMesures, strLigne, 'O');
+    getline(fluxLectureMesures, strLigne, ';');
+    getline(fluxLectureMesures, soufre, ';');
+    getline(fluxLectureMesures, strLigne);
+    getline(fluxLectureMesures, strLigne, 'P');
+    getline(fluxLectureMesures, strLigne, ';');
+    getline(fluxLectureMesures, PM, ';');
+    tableauMesures[0]=PM;
+    tableauMesures[1]=ozone;
+    tableauMesures[2]=soufre;
+    tableauMesures[3]=azote;
+    return tableauMesures;
+}
+
+string* lireLigneCapteur(ifstream &fluxLectureCapteurs){
+    string sensorID, buffer,latitude, longitude;
+    static string tableauDonneesCapteur[3];
+    const size_t offset = 0;
+    getline(fluxLectureCapteurs, sensorID, ';');
+    tableauDonneesCapteur[0]=sensorID;
+    getline(fluxLectureCapteurs, buffer, ';');
+    tableauDonneesCapteur[1]=buffer; //latitude
+    getline(fluxLectureCapteurs, buffer, ';');
+    tableauDonneesCapteur[2]=buffer; //longitude
+    getline(fluxLectureCapteurs, buffer); //aller à la ligne suivante
+    return tableauDonneesCapteur;
+}
+
 bool initialiserDonnees(const string dataset) {
     cout << "Accès aux données..." << endl;
     string nomFichier = dataset + "/measurements.csv";
@@ -104,12 +143,11 @@ bool initialiserDonnees(const string dataset) {
                     premierCapteurVu = true;
                 }
 
-                getline(fluxLectureCapteurs, sensorID, ';');
-                getline(fluxLectureCapteurs, buffer, ';');
-                latitude = stod(buffer, &offset);
-                getline(fluxLectureCapteurs, buffer, ';');
-                longitude = stod(buffer, &offset);
-                getline(fluxLectureCapteurs, buffer); //aller à la ligne suivante
+                string* tableauDonneesCapteur=lireLigneCapteur(fluxLectureCapteurs);
+                sensorID=tableauDonneesCapteur[0];
+                latitude = stod(tableauDonneesCapteur[1],&offset);
+                longitude = stod(tableauDonneesCapteur[2], &offset);
+
                 Capteur c = Capteur(sensorID, longitude, latitude, date);
                 capteur = &c;
                 service.addListeCapteurs(c);
@@ -118,23 +156,13 @@ bool initialiserDonnees(const string dataset) {
             }
 
             datePrev = date;
-            getline(fluxLectureMesures, strLigne, ';');
-            getline(fluxLectureMesures, ozone, ';');
-            getline(fluxLectureMesures, strLigne);
-            getline(fluxLectureMesures, strLigne, 'N');
-            getline(fluxLectureMesures, strLigne, ';');
-            getline(fluxLectureMesures, azote, ';');
-            getline(fluxLectureMesures, strLigne);
-            getline(fluxLectureMesures, strLigne, 'O');
-            getline(fluxLectureMesures, strLigne, ';');
-            getline(fluxLectureMesures, soufre, ';');
-            getline(fluxLectureMesures, strLigne);
-            getline(fluxLectureMesures, strLigne, 'P');
-            getline(fluxLectureMesures, strLigne, ';');
-            getline(fluxLectureMesures, PM, ';');
+            string * tableauMesures= lireLigneMesures(fluxLectureMesures);
+            PM=tableauMesures[0];
+            ozone=tableauMesures[1];
+            soufre=tableauMesures[2];
+            azote=tableauMesures[3];
 
-            Mesure mesure = Mesure(date, id, stod(PM, &offset), stod(ozone, &offset), stod(soufre, &offset),
-                                   stod(azote, &offset));
+            Mesure mesure = Mesure(date, id, stod(PM, &offset), stod(ozone, &offset), stod(soufre, &offset),stod(azote, &offset));
 
             service.getListeCapteurs().back().addMesure(mesure);
             getline(fluxLectureMesures, strLigne);
@@ -153,7 +181,6 @@ bool initialiserDonnees(const string dataset) {
     return true;
 
 }
-
 
 
 void menuGeneral()
@@ -179,7 +206,7 @@ void menuGeneral()
                 cout<<"A bientôt !"<<endl;
                 break;
             case '1' :
-                //effectuerMoyenne();
+                service.calculerMoyenneQualiteAir(2.0, 44.0, 1.2, "01/01/2019", "04/01/2019");
                 break;
 
             default : //si l'utilisateur a rentré n'importe quoi
@@ -189,16 +216,8 @@ void menuGeneral()
 } //-------------------------------------------------------------------------- Fin de menuGénéral
 
 
-
-void afficher(string chaine){
-
-
-}
-
-
-
 int main(int argc, char *argv[]) {
-    if(argc != 2) {
+    if((argc==3 && string(argv[2]) != "-test") || (argc!=2 && argc !=3)) {
         cerr << "Problème de lecture des données, merci de vérifier le chemin d'accès et son contenu\n"
                 "Rappel d'un contenu de fichier valide:\n"
                 "    - mesurements.csv\n"

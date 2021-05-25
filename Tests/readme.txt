@@ -32,5 +32,3 @@ satisfaite, il l'indiquera
 -------------------------------------------------------------------------------
 mktest.sh
 
-Fichier à personnaliser. Dans l'état, il cherche à valider tous les tests 
-contenus dans les répertoires dont le nom commence par Test.
