@@ -17,14 +17,16 @@ Fonctionalités retunues pour ce code:
 make
 ```
 ## Utilisation des tests
-
-
+*Pour utiliser les tests, il faut au préalable créer l'executable*
+```
+make
+```
 
 ```sh
 cd Tests
 sh maketest.sh
 ```
-> Note: Il est possible de compiler "manuellement et de tester les méthodes test avec l'option à l'éxecution `-test` 
+> Note: Il est possible de compiler "manuellement" et de tester les méthodes test avec l'option à l'éxecution `-test` 
 
 ```bash
 ./main -test
