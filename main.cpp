@@ -246,7 +246,7 @@ int main(int argc, char *argv[]) {
     }
 
     cout << nonFiables << " capteurs non fiables" << endl;
-/*
+    /*
     for(auto & user : service.getListeUtilisateurs()) {
         cout << user << endl;
         user.afficherCapteurs();

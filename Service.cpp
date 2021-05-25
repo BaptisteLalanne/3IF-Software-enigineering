@@ -190,6 +190,7 @@ double Service:: obtenirDensiteRegion(list<Capteur> listeDesCapteurs, double lon
     }
     double compteurZoneRegion=pow(tailleCarte,2)*M_PI*pow(rayonRegion,2)/(2*pow(rayonRegion,2));
     double densite = 100*compteurPresenceCapteur/compteurZoneRegion;
+    cout << "densité est" << densite << endl;
     return densite;
 
 }
