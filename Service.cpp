@@ -97,44 +97,7 @@ void Service::verifierFonctionnementCapteur() {
 }
 
 
-void Service::calculerMoyenneQualiteAir(double longitude, double latitude, double rayon, string dateDebut, string dateFin){
-    double moyenne[4];
-    int nombreCapteursValides = 0;
-    for (double & i : moyenne) {
-        i = 0;
-    }
-    list<Capteur> capteursProches = obtenirCapteursRegion(longitude, latitude, dateDebut, dateFin, 0, rayon);
-    if(capteursProches.empty()){
-        cerr << "Aucune donnée dans la zone ou au cours de la période sélectionnée" << endl;
-        return;
-    }
 
-    for(Capteur & capteur : capteursProches){
-        double* moyenneTousPolluants = capteur.obtenirMoyenne(dateDebut,dateFin);
-        for(int i = 0 ; i < 4; i++ ){
-            moyenne[i] = moyenne[i] + moyenneTousPolluants[i];
-        }
-        nombreCapteursValides++;
-        if( capteur.getUtilisateurPrive() != nullptr ) {
-            capteur.getUtilisateurPrive()->donnerPoints();
-        }
-    }
-
-    //On fait la moyenne des concentrations
-    for(int i = 0; i<4; i++){
-        moyenne[i]= moyenne[i]/ nombreCapteursValides;
-    }
-
-    Mesure * mesureMoyenne = new Mesure("", "", moyenne[0],moyenne[1], moyenne[2],moyenne[3]);
-    int indiceRegion = (*mesureMoyenne).calculerIndice();
-
-    double densite = obtenirDensiteRegion(capteursProches,longitude,latitude,rayon);
-    if(densite > 0.5){
-        cout << "L'indice ATMO dans la région est de "<< indiceRegion << endl;
-    }else{
-        cout << "Attention, la zone sélectionnée n'est couverte par les capteurs qu'à " << densite*100 <<"%. La moyenne est de" << moyenne <<endl;
-    }
-}
 
 
 bool comparerDates(const string date1, const string date2){
@@ -152,7 +115,7 @@ bool comparerDates(const string date1, const string date2){
 }
 
 
-list<Capteur> Service::obtenirCapteursRegion(double centreRegionLongitude, double centreRegionLatitude, string dateDebut, string dateFin, double rayonMaxRegion, double rayonMinRegion){
+list<Capteur> Service::obtenirCapteursRegion(double centreRegionLongitude, double centreRegionLatitude, string dateDebut, string dateFin, double rayonMinRegion, double rayonMaxRegion){
     Capteur * capteur;
     list<double> tableauDistances;
     list<Capteur> listeCapteursRegion;
@@ -160,7 +123,7 @@ list<Capteur> Service::obtenirCapteursRegion(double centreRegionLongitude, doubl
         if(capteur.getFiable()) {
             if(comparerDates(capteur.getPremiereMesure(),dateDebut) && comparerDates(capteur.getDerniereMesure(),dateFin)) {
                 double distanceCarreeCapteurRegion=pow(capteur.getLongitude()-centreRegionLongitude,2)+pow(capteur.getLatitude()-centreRegionLatitude,2);
-                if(distanceCarreeCapteurRegion>pow(rayonMinRegion,2) && distanceCarreeCapteurRegion<=pow(rayonMaxRegion,2)){
+                if(distanceCarreeCapteurRegion>=pow(rayonMinRegion,2) && distanceCarreeCapteurRegion<=pow(rayonMaxRegion,2)){
                     list<Capteur>::iterator itCapteur = listeCapteursRegion.begin();
                     list<double>::iterator it;
                     for(it = tableauDistances.begin(); it != tableauDistances.end(); it++){
@@ -231,5 +194,41 @@ double Service:: obtenirDensiteRegion(list<Capteur> listeDesCapteurs, double lon
 
 }
 
+void Service::calculerMoyenneQualiteAir(double longitude, double latitude, double rayon, string dateDebut, string dateFin){
+    double moyenne[4];
+    int nombreCapteursValides = 0;
+    for (double & i : moyenne) {
+        i = 0;
+    }
+    list<Capteur> capteursProches = obtenirCapteursRegion(longitude, latitude, dateDebut, dateFin, 0, rayon);
+    if(capteursProches.empty()){
+        cerr << "Aucune donnée dans la zone ou au cours de la période sélectionnée" << endl;
+        return;
+    }
 
+    for(Capteur & capteur : capteursProches){
+        double* moyenneTousPolluants = capteur.obtenirMoyenne(dateDebut,dateFin);
+        for(int i = 0 ; i < 4; i++ ){
+            moyenne[i] = moyenne[i] + moyenneTousPolluants[i];
+        }
+        nombreCapteursValides++;
+        if( capteur.getUtilisateurPrive() != nullptr ) {
+            capteur.getUtilisateurPrive()->donnerPoints();
+        }
+    }
 
+    //On fait la moyenne des concentrations
+    for(int i = 0; i<4; i++){
+        moyenne[i]= moyenne[i]/ nombreCapteursValides;
+    }
+
+    Mesure * mesureMoyenne = new Mesure("", "", moyenne[0],moyenne[1], moyenne[2],moyenne[3]);
+    int indiceRegion = (*mesureMoyenne).calculerIndice();
+
+    double densite = obtenirDensiteRegion(capteursProches,longitude,latitude,rayon);
+    if(densite > 0.5){
+        cout << "L'indice ATMO dans la région est de "<< indiceRegion << endl;
+    }else{
+        cout << "Attention, la zone sélectionnée n'est couverte par les capteurs qu'à " << densite*100 <<"%. La moyenne est de" << moyenne <<endl;
+    }
+}

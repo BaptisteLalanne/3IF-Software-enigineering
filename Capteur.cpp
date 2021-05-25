@@ -1,6 +1,7 @@
 using namespace std;
 #include <iostream>
 #include <algorithm>
+#include <cstring>
 
 #include "Capteur.h"
 
@@ -20,32 +21,21 @@ void Capteur::desactiverCapteur() {
 }
 
 double* Capteur::obtenirMoyenne(string &dateDebut, string &dateFin) {
-    double * moyenne;
+    static double * moyenne;
     int nbMesures = 0;
 
-    //auto itDebut = find_if(listeMesures.begin(), listeMesures.end(), [&dateDebut](const Mesure& mesure){return mesure.getDateMesure() == dateDebut;});
-    //auto itFin = find_if(listeMesures.begin(), listeMesures.end(), [&dateFin](const Mesure& mesure){return mesure.getDateMesure() == dateFin;});
-
-    list<Mesure>::iterator itDebut;
-    for (auto & mesure : listeMesures) {
-        if(mesure.getDateMesure() == dateDebut) {
-            *itDebut = mesure;
-        }
+    list<Mesure>::iterator it = listeMesures.begin();
+    while(it!=listeMesures.end() && strcmp((it->getDateMesure()).c_str(), dateDebut.c_str()) != 0) {
+        it++;
     }
 
-    list<Mesure>::iterator itFin;
-    for(auto & mesureFin : listeMesures) {
-        if(mesureFin.getDateMesure() == dateFin) {
-            *itFin = mesureFin;
-        }
-    }
-
-    for (auto it = itDebut; it != next(itFin); it++) {
+    while (it!=listeMesures.end() && strcmp(it->getDateMesure().c_str(), dateFin.c_str()) != 0){
         moyenne[0] += it->getOzone();
         moyenne[1] += it->getDioxydeAzote();
         moyenne[2] += it->getDioxydeSoufre();
         moyenne[3] += it->getParticulesFines();
         nbMesures++;
+        it++;
     }
 
     int i;
