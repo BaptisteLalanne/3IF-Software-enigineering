@@ -33,12 +33,15 @@ make
 cd Tests
 sh maketest.sh
 ```
+Pour observer la validation des tests unitaires et de bout en bout, il est possible d'ouvrir le .csv crée ou tout simplement observé le passage des tests sur le terminal.
+
+
 > Note: Le maketest.sh permet de tester des scénarios de bout en bout, pour tester les fonctions unitaires, il faut executer le programme avec l'option `-test` 
 
 ```bash
 ./main -test "./dataset"
 ```
-Pour observer la validation des tests unitaires et de bout en bout, il est possible d'ouvrir le .csv crée ou tout simplement observé le passage des tests sur le terminal.
+
 
 ## *Versions*
 Il y a peu de version car nous utilisons un IDE (CLion de JetBrains) pour coder en direct sur une même session. Nous faisons donc un commit par séance plutôt que un commit par features ou debug.
