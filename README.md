@@ -33,7 +33,7 @@ make
 cd Tests
 sh maketest.sh
 ```
-> Note: Il est possible de compiler "manuellement" et de tester les méthodes test avec l'option à l'éxecution `-test` 
+> Note: Le maketest.sh permet de tester des scénarios de bout en bout, pour tester les fonctions unitaires, il faut executer le programme avec l'option `-test` 
 
 ```bash
 ./main -test "./dataset"
