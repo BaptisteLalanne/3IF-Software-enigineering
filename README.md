@@ -28,7 +28,7 @@ make repo_test="./monDossier"
 ```
 make
 ```
-
+**Pour les tests bout en bout**
 ```sh
 cd Tests
 sh maketest.sh
@@ -36,10 +36,11 @@ sh maketest.sh
 Pour observer la validation des tests unitaires et de bout en bout, il est possible d'ouvrir le .csv crée ou tout simplement observé le passage des tests sur le terminal.
 
 
-> Note: Le maketest.sh permet de tester des scénarios de bout en bout, pour tester les fonctions unitaires, il faut executer le programme avec l'option `-test` 
+> Note: Le maketest.sh permet de tester des scénarios de bout en bout, pour tester les fonctions unitaires, il faut executer le programme tests
 
+**Pour les tests unitaires, il faut compiler tests.cpp et utiliser le menu dédié**
 ```bash
-./main -test "./dataset"
+make test
 ```
 
 
