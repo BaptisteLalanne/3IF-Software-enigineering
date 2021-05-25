@@ -16,6 +16,13 @@ Fonctionalités retunues pour ce code:
 ```sh
 make
 ```
+
+Par défaut le makefile prend un fichier avec les différents csv requis dans le dossier actuel "$(PWD)/dataset" 
+Pour donner une différente adresse/nom de fichier pour les data, utiliser:
+```sh
+make repo_test="./monDossier"
+```
+
 ## Utilisation des tests
 *Pour utiliser les tests, il faut au préalable créer l'executable*
 ```
@@ -29,7 +36,7 @@ sh maketest.sh
 > Note: Il est possible de compiler "manuellement" et de tester les méthodes test avec l'option à l'éxecution `-test` 
 
 ```bash
-./main -test
+./main -test "./dataset"
 ```
 Pour observer la validation des tests unitaires et de bout en bout, il est possible d'ouvrir le .csv crée ou tout simplement observé le passage des tests sur le terminal.
 
