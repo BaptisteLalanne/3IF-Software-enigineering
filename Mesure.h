@@ -14,7 +14,7 @@ public:
     }
 
     void setDateMesure(const string &dateMesure) {
-        this->dateMesure = dateMesure;
+        cout << dateMesure << endl;
     }
 
     double getOzone() const {
@@ -23,7 +23,7 @@ public:
 
     void setOzone(double ozone) {
         this->ozone = ozone;
-    };
+    }
 
     double getDioxydeAzote() const{
         return dioxydeAzote;

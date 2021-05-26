@@ -40,7 +40,6 @@ void effectuerMoyenne(){
 
     double resultat=s.calculerMoyenneQualiteAir(longitude, latitude, rayon, dateDeb, dateFin);
     cout<<"La moyenne de la qualité de l'air dans la zone spécifiée durant la période de "+ dateDeb + " à "+dateFin+" est de "+resultat+ " (indice ATMO)";
-
 }
 */
 
@@ -127,7 +126,6 @@ bool initialiserDonnees(const string dataset) {
         string strLigne, date, id, idAjoute, datePrev, ozone, soufre, azote, PM, sensorID, buffer, derniereMesure;
         bool premierCapteurVu = false;
         double latitude, longitude;
-        Capteur *capteur = nullptr;
         size_t offset = 0;
         while (!fluxLectureMesures.eof()) {
             getline(fluxLectureMesures, date, ' '); //date initialisée
@@ -138,7 +136,7 @@ bool initialiserDonnees(const string dataset) {
             getline(fluxLectureMesures, id, ';'); //id initialisé
             if (idAjoute != id) {
                 if (premierCapteurVu) {
-                    capteur->setDerniereMesure(datePrev);
+                    service.getListeCapteurs().back().setDerniereMesure(datePrev);
                 } else {
                     premierCapteurVu = true;
                 }
@@ -149,7 +147,6 @@ bool initialiserDonnees(const string dataset) {
                 longitude = stod(tableauDonneesCapteur[2], &offset);
 
                 Capteur c = Capteur(sensorID, longitude, latitude, date);
-                capteur = &c;
                 service.addListeCapteurs(c);
 
                 idAjoute = id;
@@ -167,7 +164,7 @@ bool initialiserDonnees(const string dataset) {
             service.getListeCapteurs().back().addMesure(mesure);
             getline(fluxLectureMesures, strLigne);
         }
-        capteur->setDerniereMesure(date);
+        service.getListeCapteurs().back().setDerniereMesure(datePrev);
 
         initialiserUser(fluxLectureUsers);
     }else{
@@ -206,7 +203,7 @@ void menuGeneral()
                 cout<<"A bientôt !"<<endl;
                 break;
             case '1' :
-                service.calculerMoyenneQualiteAir(2.0, 44.0, 1.2, "01/01/2019", "04/01/2019");
+                service.calculerMoyenneQualiteAir(2.0, 44.0, 1.2, "2019-01-01", "2019-01-04");
                 break;
 
             default : //si l'utilisateur a rentré n'importe quoi

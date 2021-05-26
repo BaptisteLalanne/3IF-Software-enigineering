@@ -4,6 +4,7 @@
 #include <list>
 #include <string>
 #include <ostream>
+#include <iostream>
 #include "Mesure.h"
 
 class Utilisateur;
@@ -19,7 +20,7 @@ public:
 
     void desactiverCapteur();
 
-    string getId() {
+    string& getId() {
         return capteurID;
     }
     bool getFiable() {
@@ -27,18 +28,18 @@ public:
     }
 
     double getLongitude() {
-        return longitude;}
+        return longitude;
+    }
 
-
-        double getLatitude(){
+    double getLatitude(){
         return latitude;
     }
 
-    string getPremiereMesure(){
+    string& getPremiereMesure(){
         return premiereMesure;
     }
 
-    string getDerniereMesure() {
+    string& getDerniereMesure() {
         return derniereMesure;
     }
 
@@ -70,11 +71,11 @@ public:
 
     void afficherListeMesures();
 
+    double latitude;
 private:
     string capteurID;
     bool fiable;
     double longitude;
-    double latitude;
     Utilisateur * utilisateurPrive;
     string premiereMesure;
     string derniereMesure;

@@ -6,7 +6,6 @@ using namespace std;
 #include <string>
 #include <cassert>
 
-Service service = Service();
 
 void testerCalculerIndice(){
     const string date="25/05/2021";
@@ -91,24 +90,93 @@ void testerObtenirMoyenne(){
     dateDebut = "28/05/2021";
     dateFin= "29/05/2021";
     double*v3 = capteur.obtenirMoyenne(dateDebut,dateFin);
-
 }
-
-
-
-void testerVerifierFonctionnement(){
-
-}
+/*
 
 void testerObtenirCapteursRegion(){
+    bool testsValides=true;
+    Service service = Service();
+    string dateDeb="2021-05-26":
+    string dateFin="2021-05-27";
+    Capteur c1 = Capteur("001", 46.4, 2.5, dateRef);
+    Capteur c2 = Capteur("002", 47.2, 2.5, dateRef);
+    Capteur c3 = Capteur("003", 46.4, 3.2, dateRef);
+    c1.setDerniereMesure(dateFin);
+    c2.setDerniereMesure(dateFin);
+    c3.setDerniereMesure(dateFin);
+    list<Capteur> listeCapteurs;
+    listeCapteurs.push_back(c1);
+    listeCapteurs.push_back(c2);
+    listeCapteurs.push_back(c3);
+    double latitude[3] = {46.5,46.5,44.1};
+    double longitude[3] = {2.5,2.5,2.5};
+    double rayonMax[3]={95.0,75.0,50.0};
+    list<Capteur> listeTest1;
+    list<Capteur> listeTest2;
+    list<Capteur> listeTest3; //liste vide
+    listeTest1.push_back(c1);
+    listeTest1.push_back(c2);
+    listeTest1.push_back(c3);
+    listeTest2.push_back(c1);
+    listeTest2.push_back(c3);
 
+    list<list<Capteur>> listesAttendues;
+    listesAttendues.push_back(listeTest1, listeTest2, listeTest3);
+
+    for(int i = 0, i < listeCapteurs.size(); i++){
+        list<Capteur> listeCapteursProches=service.obtenirCapteursRegion(longitude[i],latitude[i],dateDeb,dateFin, 0, rayonMax[i]); //
+        for(int j=0; j<listeCapteursProches.size();j++){
+            if(listeCapteursProches.size()!=listesAttendues[i].size()){
+                testsValides=false;
+                break;
+            }
+            list<Capteur>::iterator iter;
+            iter = find (listeCapteursProches.begin(), listeCapteursProches.end(), listesAttendues[i][j]);
+            if(iter==listeCapteursProches.end()){
+                testsValides=false;
+            }
+        }
+        if(testsValides==false){
+        cerr<<"Resultat erroné pour la détermination des capteurs proches: \n"
+                "Resultat trouvé :"<< afficherListe(listeCapteursProches) << "\n"<<
+                "Résultat attendu : "<< afficherListe(listesAttendues[i]) << endl;
+        }
+    }
 }
 
-void testerCalculerMoyenneQualiteAir(){
 
-}
+list<Capteur> Service::obtenirCapteursRegion(double centreRegionLongitude, double centreRegionLatitude, string dateDebut, string dateFin, double rayonMinRegion, double rayonMaxRegion){
+    Capteur * capteur;
+    list<double> tableauDistances;
+    list<Capteur> listeCapteursRegion;
+    for(auto & capteur : listeCapteurs){
+        if(capteur.getFiable()) {
+            if(comparerDates(capteur.getPremiereMesure(),dateDebut) && comparerDates(capteur.getDerniereMesure(),dateFin)) {
+                double distanceCarreeCapteurRegion=pow(capteur.getLongitude()-centreRegionLongitude,2)+pow(capteur.getLatitude()-centreRegionLatitude,2);
+                if(distanceCarreeCapteurRegion>=pow(rayonMinRegion,2) && distanceCarreeCapteurRegion<=pow(rayonMaxRegion,2)){
+                    list<Capteur>::iterator itCapteur = listeCapteursRegion.begin();
+                    list<double>::iterator it;
+                    for(it = tableauDistances.begin(); it != tableauDistances.end(); it++){
+                        if(tableauDistances.empty() || distanceCarreeCapteurRegion<*it) {
+                            tableauDistances.insert(it,distanceCarreeCapteurRegion);
+                            listeCapteursRegion.insert(itCapteur,capteur);
+                            break;
+                        }
+                        itCapteur++;
+                    }
+                    if(it==tableauDistances.end()) {
+                        tableauDistances.push_back(distanceCarreeCapteurRegion);
+                        listeCapteursRegion.push_back(capteur);
+                    }
+                }
+            }
+        }
+    }
+    return listeCapteursRegion;
+}*/
 
 void testerComparerDates(){
+    Service service = Service();
     const string dates1 [4]={"","21/03/2019","25/05/2021","29mars2001"}; //modifier la méthode dans Service.cpp pour vérifier que la date a bien un format Date
     const string dates2 [4]={"","22/03/2019","25/05/2021","29/03/2001"};
     bool resultat_attendu [4] ={true,false,true,false};
@@ -131,20 +199,80 @@ void testerComparerDates(){
     }
 }
 
+void afficherListe(list<Capteur> liste) {
+    int count = 1;
+    for(list<Capteur>::iterator it = liste.begin(); it != liste.end(); it++) {
+        cout << "Capteur "<< count << ":\n"
+        << "latitude: " << it->getLatitude() <<"\n"
+        << "longitude: " << it->getLongitude() <<"\n\n";
+        count++;
+    }
+    cout <<"\n\n\n";
+}
+
+
+
+/*
+double Service:: obtenirDensiteRegion(list<Capteur> listeDesCapteurs, double longitude, double latitude, double rayonRegion){ //centreRegionLongitude = longitude
+    int compteurPresenceCapteur = 0;
+    const int precision = 3;
+    const int rayonMesureCapteur = 0.4*pow(10, precision);
+    int tailleCarte = 2*rayonRegion*pow(10, precision);
+    int debutMesureCapteurLongitude, finMesureCapteurLongitude, debutMesureCapteurLatitude, finMesureCapteurLatitude, centreCapteurLongitude, centreCapteurLatitude;
+    bool carte[tailleCarte][tailleCarte];
+    for (auto & capteur : listeDesCapteurs){
+        centreCapteurLongitude = (capteur.getLongitude()-(longitude-rayonRegion))*pow(10, precision);
+        centreCapteurLatitude = (capteur.getLatitude()-(latitude-rayonRegion))*pow(10, precision);
+        debutMesureCapteurLongitude = centreCapteurLongitude - rayonMesureCapteur;
+        if(debutMesureCapteurLongitude<0) {
+            debutMesureCapteurLongitude=0;
+        }
+        finMesureCapteurLongitude = centreCapteurLongitude+rayonMesureCapteur;
+        if(finMesureCapteurLongitude>=tailleCarte) {
+            finMesureCapteurLongitude=tailleCarte-1;
+        }
+        //Ligne 46 pseudocode
+        debutMesureCapteurLatitude=centreCapteurLatitude-rayonMesureCapteur;
+        if(debutMesureCapteurLatitude<0) {
+            debutMesureCapteurLatitude=0;
+        }
+        finMesureCapteurLatitude=centreCapteurLatitude+rayonMesureCapteur;
+        if(finMesureCapteurLatitude>=tailleCarte) {
+            finMesureCapteurLatitude=tailleCarte-1;
+        }
+        //ligne 54 pseudocode
+        for(int i=debutMesureCapteurLongitude; i<finMesureCapteurLongitude; i++) {
+            for(int j=debutMesureCapteurLatitude; j<finMesureCapteurLatitude; j++) {
+                if(pow(i-longitude,2)+pow(j-latitude,2)<=pow(rayonMesureCapteur,2)) {
+                    rayonRegion = rayonRegion*pow(10,precision);
+                    if(pow(i-rayonRegion,2)+pow(j-rayonRegion,2)<=pow(rayonRegion,2)) {
+                        if(!carte[j][i]) {
+                            carte[j][i]=true;
+                            compteurPresenceCapteur++;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    double compteurZoneRegion=pow(tailleCarte,2)*M_PI*pow(rayonRegion,2)/(2*pow(rayonRegion,2));
+    double densite = 100*compteurPresenceCapteur/compteurZoneRegion;
+    cout << "densité est" << densite << endl;
+    return densite;
+
+}*/
 
 /*fonctions à tester:
 calculer Indice (Mesure) --------------fait
 obtenirMesureDate (Capteur) -----------fait
-
-
-
-obtenirMoyenne (Capteur)
+obtenirMoyenne (Capteur)-----------en cours
 calculerMoyenneQualiteAir -> déjà fait dans les tests de bout en bout
 verifierFonctionnement -> déjà fait dans les tests de bout en bout
-obtenirCapteursRegion (Service)
+obtenirCapteursRegion (Service)--------fait
 comparerDates -------------------------fait, penser à modifier comparesDates dans Service.cpp
 obtenirDensiteRegion
-*/
+
+
 
 int main (int argc, char * argv[]) {
     testerCalculerIndice();
@@ -156,3 +284,4 @@ int main (int argc, char * argv[]) {
     testerComparerDates();
     return 0;
 }
+ */

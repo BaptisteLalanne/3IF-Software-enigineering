@@ -100,16 +100,16 @@ void Service::verifierFonctionnementCapteur() {
 
 
 
-bool comparerDates(const string date1, const string date2){
+bool Service::comparerDates(const string date1, const string date2){
     istringstream flux1(date1);
     istringstream flux2(date2);
     string jour1, jour2, mois1, mois2, annee1, annee2;
-    getline(flux1, jour1, '/');
-    getline(flux1, mois1, '/');
-    getline(flux1, annee1);
-    getline(flux2, jour2, '/');
-    getline(flux2, mois2, '/');
-    getline(flux2,annee2);
+    getline(flux1, annee1, '-');
+    getline(flux1, mois1, '-');
+    getline(flux1, jour1);
+    getline(flux2, annee2, '-');
+    getline(flux2, mois2, '-');
+    getline(flux2,jour2);
 
     return(strcmp(annee1.c_str(),annee2.c_str())==-1 || (strcmp(annee1.c_str(), annee2.c_str())==0 && strcmp(mois1.c_str(), mois2.c_str())==-1) || (strcmp(annee1.c_str(), annee2.c_str())==0 && strcmp(mois1.c_str(), mois2.c_str())==-1 && (strcmp(jour1.c_str(), jour2.c_str())==-1 || strcmp(jour1.c_str(),jour2.c_str())==0) )) ;
 }
@@ -121,7 +121,7 @@ list<Capteur> Service::obtenirCapteursRegion(double centreRegionLongitude, doubl
     list<Capteur> listeCapteursRegion;
     for(auto & capteur : listeCapteurs){
         if(capteur.getFiable()) {
-            if(comparerDates(capteur.getPremiereMesure(),dateDebut) && comparerDates(capteur.getDerniereMesure(),dateFin)) {
+            if(strcmp(capteur.getPremiereMesure().c_str(),dateDebut.c_str()) <= 0 && strcmp(capteur.getDerniereMesure().c_str(),dateFin.c_str())>=0) {
                 double distanceCarreeCapteurRegion=pow(capteur.getLongitude()-centreRegionLongitude,2)+pow(capteur.getLatitude()-centreRegionLatitude,2);
                 if(distanceCarreeCapteurRegion>=pow(rayonMinRegion,2) && distanceCarreeCapteurRegion<=pow(rayonMaxRegion,2)){
                     list<Capteur>::iterator itCapteur = listeCapteursRegion.begin();
@@ -152,7 +152,13 @@ double Service:: obtenirDensiteRegion(list<Capteur> listeDesCapteurs, double lon
     const int rayonMesureCapteur = 0.4*pow(10, precision);
     int tailleCarte = 2*rayonRegion*pow(10, precision);
     int debutMesureCapteurLongitude, finMesureCapteurLongitude, debutMesureCapteurLatitude, finMesureCapteurLatitude, centreCapteurLongitude, centreCapteurLatitude;
-    bool carte[tailleCarte][tailleCarte];
+    bool ** carte = new bool*[tailleCarte];
+    for (int i = 0; i < tailleCarte; i++) {
+        carte[i] = new bool[tailleCarte];
+        for(int j = 0; j < tailleCarte; j++) {
+            carte[i][j] = false;
+        }
+    }
     for (auto & capteur : listeDesCapteurs){
         centreCapteurLongitude = (capteur.getLongitude()-(longitude-rayonRegion))*pow(10, precision);
         centreCapteurLatitude = (capteur.getLatitude()-(latitude-rayonRegion))*pow(10, precision);
@@ -191,6 +197,10 @@ double Service:: obtenirDensiteRegion(list<Capteur> listeDesCapteurs, double lon
     double compteurZoneRegion=pow(tailleCarte,2)*M_PI*pow(rayonRegion,2)/(2*pow(rayonRegion,2));
     double densite = 100*compteurPresenceCapteur/compteurZoneRegion;
     cout << "densité est" << densite << endl;
+    for (int i = 0; i < tailleCarte; i++) {
+        delete[] carte[i];
+    }
+    delete[] carte;
     return densite;
 
 }
@@ -223,13 +233,13 @@ void Service::calculerMoyenneQualiteAir(double longitude, double latitude, doubl
         moyenne[i]= moyenne[i]/ nombreCapteursValides;
     }
 
-    Mesure * mesureMoyenne = new Mesure("", "", moyenne[0],moyenne[1], moyenne[2],moyenne[3]);
+    Mesure * mesureMoyenne = new Mesure("", "", moyenne[3],moyenne[0], moyenne[2],moyenne[1]);
     int indiceRegion = (*mesureMoyenne).calculerIndice();
 
     double densite = obtenirDensiteRegion(capteursProches,longitude,latitude,rayon);
     if(densite > 0.5){
         cout << "L'indice ATMO dans la région est de "<< indiceRegion << endl;
     }else{
-        cout << "Attention, la zone sélectionnée n'est couverte par les capteurs qu'à " << densite*100 <<"%. La moyenne est de" << moyenne <<endl;
+        cout << "Attention, la zone sélectionnée n'est couverte par les capteurs qu'à " << densite*100 <<"%. La moyenne est de " << indiceRegion <<"." << endl;
     }
 }

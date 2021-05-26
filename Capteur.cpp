@@ -21,10 +21,15 @@ void Capteur::desactiverCapteur() {
 }
 
 double* Capteur::obtenirMoyenne(string &dateDebut, string &dateFin) {
-    static double * moyenne;
+    static double moyenne[4];
+    for (double & i : moyenne) {
+        i = 0;
+    }
+
     int nbMesures = 0;
 
     list<Mesure>::iterator it = listeMesures.begin();
+
     while(it!=listeMesures.end() && strcmp((it->getDateMesure()).c_str(), dateDebut.c_str()) != 0) {
         it++;
     }

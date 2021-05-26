@@ -49,7 +49,7 @@ public:
     double distanceDeuxPointsTerre(double latitudeA, double longitudeA,double latitudeB,double longitudeB);
     double obtenirDensiteRegion(list<Capteur> listeDesCapteurs,double longitude, double latitude, double rayonRegion);
     void verifierFonctionnementCapteur();
-
+    bool comparerDates(const string date1, const string date2);
     void addListeCapteurs(Capteur & capteur) {
         listeCapteurs.push_back(capteur);
     }
