@@ -7,41 +7,7 @@
 #include <cstdio>
 #include <cstdlib>
 using namespace std;
-/*
-void effectuerMoyenne(){
-    Service s;
-    double longitude, latitude, rayon;
-    string dateDeb, dateFin, info_user;
-    cout<<"Veuillez-renseigner les informations suivantes:"<<endl;
 
-    cout<<"Latitude : "<<endl;
-    getline(cin, info_user);
-    latitude=stoi(info_user);
-    cin.ignore();
-
-    cout<<"Longitude : "<<endl;
-    getline(cin,info_user);
-    longitude=stoi(info_user);
-    cin.ignore();
-
-    cout<<"Rayon : "<<endl;
-    getline(cin,info_user);
-    rayon=stoi(info_user);
-    cin.ignore();
-
-    cout<<"Date de début : "<<endl;
-    getline(cin,info_user) ;
-    dateDeb=info_user;
-    cin.ignore();
-
-    cout<<"Date de fin : "<<endl;
-    getline(cin,info_user);
-    dateFin=info_user;
-
-    double resultat=s.calculerMoyenneQualiteAir(longitude, latitude, rayon, dateDeb, dateFin);
-    cout<<"La moyenne de la qualité de l'air dans la zone spécifiée durant la période de "+ dateDeb + " à "+dateFin+" est de "+resultat+ " (indice ATMO)";
-}
-*/
 
 Service service = Service();
 
@@ -178,7 +144,43 @@ bool initialiserDonnees(const string dataset) {
     return true;
 
 }
+/*
+void effectuerMoyenne(){
+    double longitude, latitude, rayon;
+    string dateDeb, dateFin, info_user;
+    cin.clear();
+    fflush(stdin);
+    cout<<"Veuillez-renseigner les informations suivantes:"<<endl;
 
+    cout<<"Latitude :";
+    cin.ignore();
+    getline(cin, info_user);
+    latitude=atof(info_user.c_str());
+
+    cout<<"Longitude :";
+    cin.ignore();
+    getline(cin,info_user);
+    longitude=atof(info_user.c_str());
+
+    cout<<"Rayon :";
+    cin.ignore();
+    getline(cin,info_user);
+    rayon=atof(info_user.c_str());
+
+    cout<<"Date de début (AAAA-MM-JJ) :";
+    cin.ignore();
+    getline(cin,info_user) ;
+    dateDeb=info_user;
+
+    cout<<"Date de fin (AAAA-MM-JJ) :";
+    cin.ignore();
+    getline(cin,info_user);
+    dateFin=info_user;
+
+    service.calculerMoyenneQualiteAir(longitude, latitude, rayon, dateDeb, dateFin);
+    //cout<<"La moyenne de la qualité de l'air dans la zone spécifiée durant la période de "+ dateDeb + " à "+dateFin+" est de "+resultat+ " (indice ATMO)";
+}
+*/
 
 void menuGeneral()
 {
@@ -193,9 +195,9 @@ void menuGeneral()
         cout<<"1: Calculer Moyenne "<<endl;
         cout<<"0: Quitter "<<endl;
 
-        cout<<"Votre choix: ";
+        cout<<"Votre choix :";
         cin >> choix_user;
-        cout<<"------------------------------------------"<<endl;
+        cout<<"-----------------------------------"<<endl;
         cout<<endl;
 
         switch(choix_user){
@@ -204,6 +206,7 @@ void menuGeneral()
                 break;
             case '1' :
                 service.calculerMoyenneQualiteAir(2.0, 44.0, 1.2, "2019-01-01", "2019-01-04");
+                //effectuerMoyenne();
                 break;
 
             default : //si l'utilisateur a rentré n'importe quoi
@@ -234,6 +237,7 @@ int main(int argc, char *argv[]) {
         //cout << capteur << endl;
         if(!capteur.getFiable()) {
             nonFiables++;
+            cout << capteur << endl;
         }
         //capteur.afficherListeMesures();
         /*

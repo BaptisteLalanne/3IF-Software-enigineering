@@ -146,10 +146,10 @@ list<Capteur> Service::obtenirCapteursRegion(double centreRegionLongitude, doubl
 }
 
 
-double Service:: obtenirDensiteRegion(list<Capteur> listeDesCapteurs, double longitude, double latitude, double rayonRegion){ //centreRegionLongitude = longitude
+double Service:: obtenirDensiteRegion(list<Capteur> listeDesCapteurs, double longitude, double latitude, double rayonRegion, double rayonMesCapteur){ //centreRegionLongitude = longitude
     int compteurPresenceCapteur = 0;
     const int precision = 3;
-    const int rayonMesureCapteur = 0.4*pow(10, precision);
+    const int rayonMesureCapteur = rayonMesCapteur*pow(10, precision);
     int tailleCarte = 2*rayonRegion*pow(10, precision);
     int debutMesureCapteurLongitude, finMesureCapteurLongitude, debutMesureCapteurLatitude, finMesureCapteurLatitude, centreCapteurLongitude, centreCapteurLatitude;
     bool ** carte = new bool*[tailleCarte];
@@ -159,6 +159,8 @@ double Service:: obtenirDensiteRegion(list<Capteur> listeDesCapteurs, double lon
             carte[i][j] = false;
         }
     }
+    int rayonTailleTab = rayonRegion*pow(10,precision);
+
     for (auto & capteur : listeDesCapteurs){
         centreCapteurLongitude = (capteur.getLongitude()-(longitude-rayonRegion))*pow(10, precision);
         centreCapteurLatitude = (capteur.getLatitude()-(latitude-rayonRegion))*pow(10, precision);
@@ -179,12 +181,11 @@ double Service:: obtenirDensiteRegion(list<Capteur> listeDesCapteurs, double lon
         if(finMesureCapteurLatitude>=tailleCarte) {
             finMesureCapteurLatitude=tailleCarte-1;
         }
-        //ligne 54 pseudocode
+
         for(int i=debutMesureCapteurLongitude; i<finMesureCapteurLongitude; i++) {
             for(int j=debutMesureCapteurLatitude; j<finMesureCapteurLatitude; j++) {
-                if(pow(i-longitude,2)+pow(j-latitude,2)<=pow(rayonMesureCapteur,2)) {
-                    rayonRegion = rayonRegion*pow(10,precision);
-                    if(pow(i-rayonRegion,2)+pow(j-rayonRegion,2)<=pow(rayonRegion,2)) {
+                if(pow(i-centreCapteurLongitude,2)+pow(j-centreCapteurLatitude,2)<=pow(rayonMesureCapteur,2)) {
+                    if(pow(i-rayonTailleTab,2)+pow(j-rayonTailleTab,2)<=pow(rayonTailleTab,2)) {
                         if(!carte[j][i]) {
                             carte[j][i]=true;
                             compteurPresenceCapteur++;
@@ -194,9 +195,10 @@ double Service:: obtenirDensiteRegion(list<Capteur> listeDesCapteurs, double lon
             }
         }
     }
-    double compteurZoneRegion=pow(tailleCarte,2)*M_PI*pow(rayonRegion,2)/(2*pow(rayonRegion,2));
+
+    double compteurZoneRegion=pow(tailleCarte/2,2)*M_PI;
     double densite = 100*compteurPresenceCapteur/compteurZoneRegion;
-    cout << "densité est" << densite << endl;
+    cout << "densité est " << densite << endl;
     for (int i = 0; i < tailleCarte; i++) {
         delete[] carte[i];
     }
@@ -211,13 +213,15 @@ void Service::calculerMoyenneQualiteAir(double longitude, double latitude, doubl
     for (double & i : moyenne) {
         i = 0;
     }
-    list<Capteur> capteursProches = obtenirCapteursRegion(longitude, latitude, dateDebut, dateFin, 0, rayon);
+    double rayonMesureCapteur = 0.4;
+    list<Capteur> capteursProches = obtenirCapteursRegion(longitude, latitude, dateDebut, dateFin, 0, rayon + rayonMesureCapteur);
     if(capteursProches.empty()){
         cerr << "Aucune donnée dans la zone ou au cours de la période sélectionnée" << endl;
         return;
     }
 
     for(Capteur & capteur : capteursProches){
+        cout << capteur << endl;
         double* moyenneTousPolluants = capteur.obtenirMoyenne(dateDebut,dateFin);
         for(int i = 0 ; i < 4; i++ ){
             moyenne[i] = moyenne[i] + moyenneTousPolluants[i];
@@ -236,7 +240,7 @@ void Service::calculerMoyenneQualiteAir(double longitude, double latitude, doubl
     Mesure * mesureMoyenne = new Mesure("", "", moyenne[3],moyenne[0], moyenne[2],moyenne[1]);
     int indiceRegion = (*mesureMoyenne).calculerIndice();
 
-    double densite = obtenirDensiteRegion(capteursProches,longitude,latitude,rayon);
+    double densite = obtenirDensiteRegion(capteursProches,longitude,latitude,rayon,rayonMesureCapteur);
     if(densite > 0.5){
         cout << "L'indice ATMO dans la région est de "<< indiceRegion << endl;
     }else{
