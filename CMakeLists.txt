@@ -3,4 +3,4 @@ project(ProjetCapteur)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(ProjetCapteur main.cpp Capteur.cpp Capteur.h Mesure.cpp Mesure.h Utilisateur.cpp Utilisateur.h Service.cpp Service.h Test.cpp)
+add_executable(ProjetCapteur main.cpp Capteur.cpp Capteur.h Mesure.cpp Mesure.h Utilisateur.cpp Utilisateur.h Service.cpp Service.h Test.cpp Test.h)
