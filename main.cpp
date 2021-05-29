@@ -6,6 +6,7 @@
 #include <cstdlib>
 #include <stdio.h>
 #include <chrono>
+#include <cmath>
 
 using namespace std;
 using std::chrono::high_resolution_clock;
@@ -187,8 +188,7 @@ void effectuerMoyenne(){
 
 void menuGeneral()
 {
-    //cout << sin(90) << endl;
-    cout << service.distanceDeuxPointsTerre(0.5, 45.2, 1.7, 44.6) << endl;
+    cout << service.distanceDeuxPointsTerre(44.4, 0.1, 44.4, 0.8) << endl;
 
     char choix_user;
     double donnee_user;

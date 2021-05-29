@@ -17,16 +17,27 @@ Service::~Service() {
 
 
 void Service::addListeCapteurs(Capteur & capteur) {
-    this->listeCapteurs.push_back(capteur);
+   listeCapteurs.push_back(capteur);
 }
 
 list<Capteur>& Service::getListeCapteurs() {
-    return this->listeCapteurs;
+    return listeCapteurs;
+}
+
+list<Utilisateur>& Service::getListeUtilisateurs() {
+    return listeUtilisateurs;
+}
+
+void Service::addListeUtilisateurs(Utilisateur & utilisateur) {
+    listeUtilisateurs.push_back(utilisateur);
 }
 
 double Service::distanceDeuxPointsTerre(double latitudeA, double longitudeA,double latitudeB,double longitudeB){
     int rayonTerre = 6373;
-    return rayonTerre*acos(sin(latitudeA)*sin(latitudeB)+cos(latitudeA)*cos(latitudeB)*cos(longitudeB-longitudeA));
+    latitudeA = latitudeA*M_PI/180;
+    latitudeB = latitudeB*M_PI/180;
+    double diffLongitude = (longitudeB - longitudeA)*M_PI/180;
+    return rayonTerre*acos(sin(latitudeA)*sin(latitudeB)+cos(latitudeA)*cos(latitudeB)*cos(diffLongitude));
 }
 
 void Service::verifierFonctionnementCapteur() {
@@ -37,8 +48,8 @@ void Service::verifierFonctionnementCapteur() {
     double moyenneDateTab[4];
     int nombreDonneesComparaison;
     const int differencePourFiabilite = 2;
-    const double rayonVerification = 65;
-    const int nbVoisinsRequis = 2;
+    const double rayonVerification = 90;
+    const int nbVoisinsRequis = 3;
     Mesure *mesureMoyenne;
     list<Capteur> capteursProches;
 

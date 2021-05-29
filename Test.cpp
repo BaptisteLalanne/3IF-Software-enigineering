@@ -158,24 +158,31 @@ void testerObtenirCapteursRegion(){
     Service service = Service();
     string dateDeb="2021-05-26";
     string dateFin="2021-05-27";
-    Capteur c1 = Capteur("001", 46.4, 2.5, dateDeb);
-    Capteur c2 = Capteur("002", 47.2, 2.5, dateDeb);
-    Capteur c3 = Capteur("003", 46.4, 3.2, dateDeb);
+    Capteur c1 = Capteur("001", 2.5, 46.4, dateDeb);
+    Capteur c2 = Capteur("002", 2.5, 47.2, dateDeb);
+    Capteur c3 = Capteur("003", 3.2, 46.4, dateDeb);
+    Capteur c4 = Capteur("004", 2.7, 46.8, dateFin);
     c1.setDerniereMesure(dateFin);
     c2.setDerniereMesure(dateFin);
     c3.setDerniereMesure(dateFin);
+    c4.setDerniereMesure("2021-05-28");
     service.getListeCapteurs().push_back(c1);
     service.getListeCapteurs().push_back(c2);
     service.getListeCapteurs().push_back(c3);
-    double longitude[3] = {46.5,46.5,44.1};
-    double latitude[3] = {2.5,2.5,2.5};
-    double rayonMax[3]={3.0,0.7,0.1};
+    double latitude[4] = {46.5,46.5,44.1,46.6};
+    double longitude[4] = {2.5,2.5,2.5,2.5};
+    double rayonMax[4]={150,80,2,150};
+    double rayonMin[4]={0,0,0,70};
+    string datesDeb[4]={dateDeb, dateDeb, dateDeb, dateDeb};
+    string datesFin[4]={"2021-05-28",dateFin,dateFin,dateFin};
     list<Capteur> listeTest1;
     list<Capteur> listeTest2;
     list<Capteur> listeTest3; //liste vide
+    list<Capteur> listeTest4;
     listeTest1.push_back(c1);
     listeTest1.push_back(c2);
     listeTest1.push_back(c3);
+    listeTest1.push_back(c4);
     listeTest2.push_back(c1);
     listeTest2.push_back(c3);
 
@@ -186,8 +193,8 @@ void testerObtenirCapteursRegion(){
 
     bool allTestsValides = true;
     auto it = listesAttendues.begin();
-    for(int i = 0; i < 3; i++){
-        list<Capteur> listeCapteursProches = service.obtenirCapteursRegion(longitude[i], latitude[i], dateDeb, dateFin, 0, rayonMax[i]);
+    for(int i = 0; i < 4; i++){
+        list<Capteur> listeCapteursProches = service.obtenirCapteursRegion(longitude[i], latitude[i], datesDeb[i], datesFin[i], rayonMin[i], rayonMax[i]);
         auto it_sousliste = (*it).begin();
         testsValides = true;
         if(listeCapteursProches.size()!=(*it).size()){
@@ -221,6 +228,23 @@ void testerObtenirCapteursRegion(){
     }
     cout << "-------------------------------------------------------------------" << endl << endl << endl << endl;
 }
+/*
+
+void testerObtenirDensiteRegion(){
+    cout << "------------ TESTS UNITAIRES - OBTENIR DENSITE REGION ------------" << endl << endl;
+/*cas à tester:
+1) deux capteurs avec zones d'influence complètement dans région étudiée
+2) deux capteurs complètement dans une région et un à l'extérieur dont la zone d'influence fait une intersection avec zone étudiée
+3) deux capteurs dans zone étudiée avec zones d'influence dépassant de la zone étudiée
+4) capteurs dont zone d'influence ne font pas d'intersection avec zone étudiée : densité nulle
+5) densité 100%
+6) 2 capteurs dans zone étudiée et leurs zones d'influences se chevauchent (pas compter deux fois densité)
+
+}
+//obtenirDensiteRegion(list<Capteur> listeDesCapteurs, double longitude, double latitude, double rayonRegion, double rayonMesCapteur){ //centreRegionLongitude = longitude
+*/
+
+
 /*
 int main() {
     testerCalculerIndice();

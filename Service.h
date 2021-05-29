@@ -35,17 +35,7 @@ class Service
 
 public:
 //----------------------------------------------------- Méthodes publiques
-/*
-    void seConnecter(string utilisateurID);
 
-
-
-    int calculerMoyenneQualiteAir(double Longitude, double Latitude, double rayon, string dateDebut, string dateFin);
-
-
-    list<Capteur> obtenirCapteursRegion(double longitude, double latitude, string dateDeb, string dateFin, double rayonMax, double rayonMin);
-
-    */
     double distanceDeuxPointsTerre(double latitudeA, double longitudeA,double latitudeB,double longitudeB);
     double obtenirDensiteRegion(list<Capteur> listeDesCapteurs,double longitude, double latitude, double rayonRegion, double rayonMesCapteur);
     void verifierFonctionnementCapteur();
@@ -54,13 +44,10 @@ public:
 
     list<Capteur>& getListeCapteurs() ;
 
-    void addListeUtilisateurs(Utilisateur & utilisateur) {
-        listeUtilisateurs.push_back(utilisateur);
-    }
+    void addListeUtilisateurs(Utilisateur & utilisateur);
 
-    list<Utilisateur>& getListeUtilisateurs() {
-        return listeUtilisateurs;
-    }
+    list<Utilisateur>& getListeUtilisateurs();
+
 
     void calculerMoyenneQualiteAir(double longitude, double latitude, double rayon, string dateDebut, string dateFin);
 
@@ -68,7 +55,7 @@ public:
 
     Service ();
 
-    virtual ~Service ( );
+    virtual ~Service ();
 
 //------------------------------------------------------------------ PRIVE
 
@@ -78,8 +65,6 @@ private:
 //----------------------------------------------------- Attributs protégés
     list<Capteur> listeCapteurs;
     list<Utilisateur> listeUtilisateurs;
-
-
 
 };
 
