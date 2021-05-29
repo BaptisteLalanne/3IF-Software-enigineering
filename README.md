@@ -14,22 +14,22 @@ Fonctionalités retunues pour ce code:
 ## Utilisation du programme
 
 ```sh
-make
+make run
 ```
 
 Par défaut le makefile prend un fichier avec les différents csv requis dans le dossier actuel "$(PWD)/dataset" 
-Pour donner une différente adresse/nom de fichier pour les data, utiliser:
-```sh
-make repo_test="./monDossier"
-```
+
+Différentes commandes sont utilisables dans le make:
+- clean 
+- mproper 
+- debug (Valgrind)
+
 
 ## Utilisation des tests
-*Pour utiliser les tests, il faut au préalable créer l'executable*
-```
-make
-```
-**Pour les tests bout en bout**
+
+***Pour utiliser les tests, il faut au préalable créer l'executable***
 ```sh
+make
 cd Tests
 sh maketest.sh
 ```
@@ -38,7 +38,7 @@ Pour observer la validation des tests unitaires et de bout en bout, il est possi
 
 **Pour les tests unitaires, il faut compiler tests.cpp**
 ```bash
-make test
+make runTest
 ```
 > Note: Encore une fois, il est possible de modifier le chemin d'accès du dossier de donnée
 
