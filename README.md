@@ -30,7 +30,7 @@ Différentes commandes sont utilisables dans le make:
 ***Pour utiliser les tests, il faut au préalable créer l'executable (via make par exemple)***
 ```sh
 make
-cd Tests
+cd Tests/TestsFichiers
 sh maketest.sh
 ```
 Pour observer la validation des tests unitaires et de bout en bout, il est possible d'ouvrir le .csv crée ou tout simplement observé le passage des tests sur le terminal.
