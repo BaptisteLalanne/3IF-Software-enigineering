@@ -222,6 +222,19 @@ void testerObtenirCapteursRegion(){
     cout << "-------------------------------------------------------------------" << endl << endl << endl << endl;
 }
 
+void testerObtenirDensiteRegion(){
+    cout << "------------ TESTS UNITAIRES - OBTENIR DENSITE REGION ------------" << endl << endl;
+/*cas à tester:
+1) deux capteurs avec zones d'influence complètement dans région étudiée
+2) deux capteurs complètement dans une région et un à l'extérieur dont la zone d'influence fait une intersection avec zone étudiée
+3) deux capteurs dans zone étudiée avec zones d'influence dépassant de la zone étudiée
+4) capteurs dont zone d'influence ne font pas d'intersection avec zone étudiée : densité nulle
+5) densité 100%
+6) 2 capteurs dans zone étudiée et leurs zones d'influences se chevauchent (pas compter deux fois densité)
+*/
+}
+//obtenirDensiteRegion(list<Capteur> listeDesCapteurs, double longitude, double latitude, double rayonRegion, double rayonMesCapteur){ //centreRegionLongitude = longitude
+
 int main() {
     testerCalculerIndice();
     testerObtenirMesureDate();

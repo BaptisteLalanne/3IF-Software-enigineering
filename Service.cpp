@@ -17,11 +17,19 @@ Service::~Service() {
 
 
 void Service::addListeCapteurs(Capteur & capteur) {
-    this->listeCapteurs.push_back(capteur);
+   listeCapteurs.push_back(capteur);
 }
 
 list<Capteur>& Service::getListeCapteurs() {
-    return this->listeCapteurs;
+    return listeCapteurs;
+}
+
+list<Utilisateur>& Service::getListeUtilisateurs() {
+    return listeUtilisateurs;
+}
+
+void addListeUtilisateurs(Utilisateur & utilisateur) {
+    listeUtilisateurs.push_back(utilisateur);
 }
 
 double Service::distanceDeuxPointsTerre(double latitudeA, double longitudeA,double latitudeB,double longitudeB){
