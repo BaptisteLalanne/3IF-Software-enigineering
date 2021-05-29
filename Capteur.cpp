@@ -30,23 +30,27 @@ double* Capteur::obtenirMoyenne(string &dateDebut, string &dateFin) {
 
     list<Mesure>::iterator it = listeMesures.begin();
 
-    while(it!=listeMesures.end() && strcmp((it->getDateMesure()).c_str(), dateDebut.c_str()) != 0) {
+    while(it!=listeMesures.end() && strcmp((it->getDateMesure()).c_str(), dateDebut.c_str()) < 0) {
         it++;
     }
 
-    while (it!=listeMesures.end() && strcmp(it->getDateMesure().c_str(), dateFin.c_str()) != 0){
+    while (it != listeMesures.end() && strcmp(it->getDateMesure().c_str(), dateFin.c_str()) <= 0) {
         moyenne[0] += it->getOzone();
-        moyenne[1] += it->getDioxydeAzote();
-        moyenne[2] += it->getDioxydeSoufre();
+        moyenne[1] += it->getDioxydeSoufre();
+        moyenne[2] += it->getDioxydeAzote();
         moyenne[3] += it->getParticulesFines();
         nbMesures++;
         it++;
     }
 
     int i;
-    for (i = 0; i<4; i++) {
-        moyenne[i] /= nbMesures;
+    if(nbMesures!=0) {
+                for (i = 0; i<4; i++) {
+                moyenne[i] /= nbMesures;
+        }
+
     }
+
 
     return moyenne;
 }
@@ -72,4 +76,10 @@ void Capteur::afficherListeMesures() {
     for(list<Mesure>::iterator it = listeMesures.begin(); it != listeMesures.end(); it++) {
         cout << *it << endl;
     }
+}
+
+bool Capteur::operator==(const Capteur &rhs) const {
+
+    return latitude == rhs.latitude &&
+           longitude == rhs.longitude;
 }

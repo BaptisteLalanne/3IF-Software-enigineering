@@ -52,9 +52,13 @@ public:
     }
 
     Mesure();
-    Mesure(const string &laDate, string idMesure, double concentrationPM, double concentrationOzone, double concentrationDioxydeSoufre, double concentrationDioxydeAzote);
+    Mesure(const string &laDate, string idMesure, double concentrationOzone, double concentrationDioxydeSoufre, double concentrationDioxydeAzote, double concentrationPM);
 
     friend ostream &operator<<(ostream &os, const Mesure &mesure);
+
+    bool operator==(const Mesure &rhs) const;
+
+    bool operator!=(const Mesure &rhs) const;
 
 private:
     string id;

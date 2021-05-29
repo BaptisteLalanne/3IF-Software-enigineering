@@ -6,7 +6,7 @@ using namespace std;
 Mesure::Mesure(){
 }
 
-Mesure::Mesure(const string &laDate, string idMesure, double concentrationPM, double concentrationOzone, double concentrationDioxydeSoufre, double concentartionDioxydeAzote)
+Mesure::Mesure(const string &laDate, string idMesure, double concentrationOzone, double concentrationDioxydeSoufre, double concentartionDioxydeAzote, double concentrationPM)
 {
     dateMesure = laDate;
     id = idMesure;
@@ -65,10 +65,3 @@ ostream &operator<<(ostream &os, const Mesure &mesure) {
        << mesure.particulesFines;
     return os;
 }
-
-
-
-
-
-
-

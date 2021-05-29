@@ -71,6 +71,18 @@ public:
 
     void afficherListeMesures();
 
+    bool operator<(const Capteur &rhs) const;
+
+    bool operator>(const Capteur &rhs) const;
+
+    bool operator<=(const Capteur &rhs) const;
+
+    bool operator>=(const Capteur &rhs) const;
+
+    bool operator==(const Capteur &rhs) const;
+
+    bool operator!=(const Capteur &rhs) const;
+
     double latitude;
 private:
     string capteurID;

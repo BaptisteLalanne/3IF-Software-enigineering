@@ -18,7 +18,6 @@ CMakeFiles/ProjetCapteur.dir/Test.cpp.obj: ../Capteur.h
 CMakeFiles/ProjetCapteur.dir/Test.cpp.obj: ../Mesure.h
 CMakeFiles/ProjetCapteur.dir/Test.cpp.obj: ../Service.h
 CMakeFiles/ProjetCapteur.dir/Test.cpp.obj: ../Test.cpp
-CMakeFiles/ProjetCapteur.dir/Test.cpp.obj: ../Test.h
 CMakeFiles/ProjetCapteur.dir/Test.cpp.obj: ../Utilisateur.h
 
 CMakeFiles/ProjetCapteur.dir/Utilisateur.cpp.obj: ../Capteur.h
@@ -29,8 +28,6 @@ CMakeFiles/ProjetCapteur.dir/Utilisateur.cpp.obj: ../Utilisateur.h
 CMakeFiles/ProjetCapteur.dir/main.cpp.obj: ../Capteur.h
 CMakeFiles/ProjetCapteur.dir/main.cpp.obj: ../Mesure.h
 CMakeFiles/ProjetCapteur.dir/main.cpp.obj: ../Service.h
-CMakeFiles/ProjetCapteur.dir/main.cpp.obj: ../Test.cpp
-CMakeFiles/ProjetCapteur.dir/main.cpp.obj: ../Test.h
 CMakeFiles/ProjetCapteur.dir/main.cpp.obj: ../Utilisateur.h
 CMakeFiles/ProjetCapteur.dir/main.cpp.obj: ../main.cpp
 

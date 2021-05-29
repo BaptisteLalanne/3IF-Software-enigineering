@@ -45,16 +45,12 @@ Mesure.h
 C:/Users/Rami EL RIFAI/Desktop/INSA Lyon/IF/GL/ProjetCapteur/Mesure.h
 Capteur.h
 C:/Users/Rami EL RIFAI/Desktop/INSA Lyon/IF/GL/ProjetCapteur/Capteur.h
-Test.h
-C:/Users/Rami EL RIFAI/Desktop/INSA Lyon/IF/GL/ProjetCapteur/Test.h
 string
 -
 cassert
 -
 algorithm
 -
-
-C:/Users/Rami EL RIFAI/Desktop/INSA Lyon/IF/GL/ProjetCapteur/Test.h
 
 C:/Users/Rami EL RIFAI/Desktop/INSA Lyon/IF/GL/ProjetCapteur/Utilisateur.h
 string
@@ -77,6 +73,4 @@ cstdlib
 -
 stdio.h
 -
-Test.cpp
-C:/Users/Rami EL RIFAI/Desktop/INSA Lyon/IF/GL/ProjetCapteur/Test.cpp
 

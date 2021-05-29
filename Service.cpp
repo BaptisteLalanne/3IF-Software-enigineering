@@ -23,67 +23,68 @@ void Service::verifierFonctionnementCapteur() {
 
     double moyenne[4];
     double distanceCarreeEntreCapteurs;
-    Mesure * moyenneDate;
+    Mesure *moyenneDate;
     double moyenneDateTab[4];
     int nombreDonneesComparaison;
     const int differencePourFiabilite = 2;
     const double rayonVerification = 0.75;
     const int nbVoisinsRequis = 2;
-    Mesure * mesureMoyenne;
+    Mesure *mesureMoyenne;
     list<Capteur> capteursProches;
     using std::chrono::high_resolution_clock;
     using std::chrono::duration_cast;
     using std::chrono::milliseconds;
 
     //auto t1 = high_resolution_clock::now();
-    for (auto & capteur : listeCapteurs){
+    for (auto &capteur : listeCapteurs) {
 
-        for(auto & capteur2 : listeCapteurs){
-            if(capteur2.getId() != capteur.getId()) {
+        for (auto &capteur2 : listeCapteurs) {
+            if (capteur2.getId() != capteur.getId()) {
                 //distanceCarreeEntreCapteurs = pow(distanceDeuxPointsTerre(capteur2.getLatitude(),capteur2.getLongitude(),capteur.getLatitude(),capteur.getLongitude()),2);
-                distanceCarreeEntreCapteurs = pow((capteur.getLongitude()-capteur2.getLongitude()),2) + pow(capteur.getLatitude()-capteur2.getLatitude(), 2);
+                distanceCarreeEntreCapteurs = pow((capteur.getLongitude() - capteur2.getLongitude()), 2) +
+                                              pow(capteur.getLatitude() - capteur2.getLatitude(), 2);
                 if (distanceCarreeEntreCapteurs <= pow(rayonVerification, 2)) {
                     capteursProches.push_back(capteur2);
                 }
             }
         }
 
-        for(auto & mesure : capteur.getListeMesures()){
-            for (int i=0;i<3;i++){
-                moyenne[i]=0;
+        for (auto &mesure : capteur.getListeMesures()) {
+            for (int i = 0; i < 3; i++) {
+                moyenne[i] = 0;
             }
-            nombreDonneesComparaison=0;
-            for(auto & capteurComp : capteursProches){
-                if(capteurComp.obtenirMesureDate(mesure.getDateMesure()) != nullptr){
-                    moyenneDate= capteurComp.obtenirMesureDate(mesure.getDateMesure());
-                    moyenneDateTab[0]=moyenneDate->getParticulesFines();
-                    moyenneDateTab[1]=moyenneDate->getOzone();
-                    moyenneDateTab[2]=moyenneDate->getDioxydeSoufre();
-                    moyenneDateTab[3]=moyenneDate->getDioxydeAzote();
-                    for(int i=0;i<4;i++){
-                        moyenne[i]+=moyenneDateTab[i];
+            nombreDonneesComparaison = 0;
+            for (auto &capteurComp : capteursProches) {
+                if (capteurComp.obtenirMesureDate(mesure.getDateMesure()) != nullptr) {
+                    moyenneDate = capteurComp.obtenirMesureDate(mesure.getDateMesure());
+                    moyenneDateTab[0] = moyenneDate->getOzone();
+                    moyenneDateTab[1] = moyenneDate->getDioxydeSoufre();
+                    moyenneDateTab[2] = moyenneDate->getDioxydeAzote();
+                    moyenneDateTab[3] = moyenneDate->getParticulesFines();
+                    for (int i = 0; i < 4; i++) {
+                        moyenne[i] += moyenneDateTab[i];
                     }
-                    nombreDonneesComparaison ++;
+                    nombreDonneesComparaison++;
                 }
             }
-            if(nombreDonneesComparaison >= nbVoisinsRequis){
-                for(int i=0; i<4; i++){
-                    moyenne[i]/=nombreDonneesComparaison;
+            if (nombreDonneesComparaison >= nbVoisinsRequis) {
+                for (int i = 0; i < 4; i++) {
+                    moyenne[i] /= nombreDonneesComparaison;
                 }
-                mesureMoyenne = new Mesure("", "", moyenne[0],moyenne[1], moyenne[2],moyenne[3]);
+                mesureMoyenne = new Mesure("", "", moyenne[0], moyenne[1], moyenne[2], moyenne[3]);
 
-                if(abs(mesureMoyenne->calculerIndice() - mesure.calculerIndice())>differencePourFiabilite){
+                if (abs(mesureMoyenne->calculerIndice() - mesure.calculerIndice()) > differencePourFiabilite) {
                     capteur.desactiverCapteur();
-                    if(capteur.getUtilisateurPrive()){
+                    if (capteur.getUtilisateurPrive()) {
                         capteur.getUtilisateurPrive()->empecherGagnerPoints();
                         break;
                     }
                 }
 
                 delete mesureMoyenne;
-            }else{
+            } else {
                 capteur.desactiverCapteur();
-                if(capteur.getUtilisateurPrive()!=nullptr){
+                if (capteur.getUtilisateurPrive() != nullptr) {
                     capteur.getUtilisateurPrive()->empecherGagnerPoints();
                     break;
                 }
@@ -95,7 +96,6 @@ void Service::verifierFonctionnementCapteur() {
     //auto ms_int = duration_cast<milliseconds>(t2 - t1);
     //std::cout << ms_int.count() << "ms\n";
 }
-
 
 
 
@@ -237,7 +237,7 @@ void Service::calculerMoyenneQualiteAir(double longitude, double latitude, doubl
         moyenne[i]= moyenne[i]/ nombreCapteursValides;
     }
 
-    Mesure * mesureMoyenne = new Mesure("", "", moyenne[3],moyenne[0], moyenne[2],moyenne[1]);
+    Mesure * mesureMoyenne = new Mesure("", "", moyenne[0],moyenne[1], moyenne[2],moyenne[3]);
     int indiceRegion = (*mesureMoyenne).calculerIndice();
 
     double densite = obtenirDensiteRegion(capteursProches,longitude,latitude,rayon,rayonMesureCapteur);

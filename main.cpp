@@ -6,7 +6,6 @@
 #include <cstdio>
 #include <cstdlib>
 #include <stdio.h>
-#include "Test.cpp"
 
 using namespace std;
 
@@ -127,7 +126,7 @@ bool initialiserDonnees(const string dataset) {
             soufre=tableauMesures[2];
             azote=tableauMesures[3];
 
-            Mesure mesure = Mesure(date, id, stod(PM, &offset), stod(ozone, &offset), stod(soufre, &offset),stod(azote, &offset));
+            Mesure mesure = Mesure(date, id, stod(ozone, &offset), stod(soufre, &offset),stod(azote, &offset), stod(PM, &offset));
 
             service.getListeCapteurs().back().addMesure(mesure);
             getline(fluxLectureMesures, strLigne);
@@ -227,40 +226,35 @@ int main(int argc, char *argv[]) {
                 "    - users.csv";
     }
 
-    if(string(argv[2]) == "--test") {
-        Test test = Test();
-        test.mainTests();
-    } else {
-
-        if (!initialiserDonnees(argv[1])) {
-            return 1;
-        }
-        cout << "Données ajoutées avec succés!" << endl;
-
-        service.verifierFonctionnementCapteur();
-
-        int nonFiables = 0;
-
-        for (auto &capteur : service.getListeCapteurs()) {
-            //cout << capteur << endl;
-            if (!capteur.getFiable()) {
-                nonFiables++;
-                cout << capteur << endl;
-            }
-            //capteur.afficherListeMesures();
-            /*
-            for (auto & mesure : capteur.getListeMesures()) {
-                cout << capteur.getId() <<";" << mesure.getDateMesure() << ";" << mesure.calculerIndice() << endl;
-            }*/
-        }
-
-        cout << nonFiables << " capteurs non fiables" << endl;
-        /*
-        for(auto & user : service.getListeUtilisateurs()) {
-            cout << user << endl;
-            user.afficherCapteurs();
-        }*/
-        menuGeneral();
+    if (!initialiserDonnees(argv[1])) {
+        return 1;
     }
+    cout << "Données ajoutées avec succés!" << endl;
+
+    service.verifierFonctionnementCapteur();
+
+    int nonFiables = 0;
+
+    for (auto &capteur : service.getListeCapteurs()) {
+        //cout << capteur << endl;
+        if (!capteur.getFiable()) {
+            nonFiables++;
+            cout << capteur << endl;
+        }
+        //capteur.afficherListeMesures();
+        /*
+        for (auto & mesure : capteur.getListeMesures()) {
+            cout << capteur.getId() <<";" << mesure.getDateMesure() << ";" << mesure.calculerIndice() << endl;
+        }*/
+    }
+
+    cout << nonFiables << " capteurs non fiables" << endl;
+    /*
+    for(auto & user : service.getListeUtilisateurs()) {
+        cout << user << endl;
+        user.afficherCapteurs();
+    }*/
+    menuGeneral();
+
     return 0;
 }
