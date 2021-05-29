@@ -157,40 +157,44 @@ void testerObtenirCapteursRegion(){
     bool testsValides=true;
     Service service = Service();
     string dateDeb="2021-05-26";
-    string dateFin="2021-05-27";
+    string dateDeb2="2021-05-27";
+    string dateFin="2021-05-28";
     Capteur c1 = Capteur("001", 2.5, 46.4, dateDeb);
     Capteur c2 = Capteur("002", 2.5, 47.2, dateDeb);
     Capteur c3 = Capteur("003", 3.2, 46.4, dateDeb);
-    Capteur c4 = Capteur("004", 2.7, 46.8, dateFin);
+    Capteur c4 = Capteur("004", 2.7, 46.8, dateDeb2);
     c1.setDerniereMesure(dateFin);
     c2.setDerniereMesure(dateFin);
     c3.setDerniereMesure(dateFin);
-    c4.setDerniereMesure("2021-05-28");
+    c4.setDerniereMesure(dateFin);
     service.getListeCapteurs().push_back(c1);
     service.getListeCapteurs().push_back(c2);
     service.getListeCapteurs().push_back(c3);
+    service.getListeCapteurs().push_back(c4);
     double latitude[4] = {46.5,46.5,44.1,46.6};
     double longitude[4] = {2.5,2.5,2.5,2.5};
-    double rayonMax[4]={150,80,2,150};
-    double rayonMin[4]={0,0,0,70};
-    string datesDeb[4]={dateDeb, dateDeb, dateDeb, dateDeb};
-    string datesFin[4]={"2021-05-28",dateFin,dateFin,dateFin};
+    double rayonMax[4]={150,60,2,150};
+    double rayonMin[4]={0,0,0,50};
+    string datesDeb[4]={dateDeb2,dateDeb,dateDeb,dateDeb};
+    string datesFin[4]={dateFin,dateFin,dateFin,dateFin};
     list<Capteur> listeTest1;
     list<Capteur> listeTest2;
     list<Capteur> listeTest3; //liste vide
     list<Capteur> listeTest4;
     listeTest1.push_back(c1);
-    listeTest1.push_back(c2);
-    listeTest1.push_back(c3);
     listeTest1.push_back(c4);
+    listeTest1.push_back(c3);
+    listeTest1.push_back(c2);
     listeTest2.push_back(c1);
     listeTest2.push_back(c3);
+    listeTest4.push_back(c3);
+    listeTest4.push_back(c2);
 
     list<list<Capteur>> listesAttendues;
     listesAttendues.push_back(listeTest1);
     listesAttendues.push_back(listeTest2);
     listesAttendues.push_back(listeTest3);
-
+    listesAttendues.push_back(listeTest4);
     bool allTestsValides = true;
     auto it = listesAttendues.begin();
     for(int i = 0; i < 4; i++){

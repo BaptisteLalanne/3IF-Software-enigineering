@@ -206,10 +206,10 @@ double Service:: obtenirDensiteRegion(list<Capteur> listeDesCapteurs, double lon
 
         for(int i=debutMesureCapteurLongitude; i<finMesureCapteurLongitude; i++) {
             for(int j=debutMesureCapteurLatitude; j<finMesureCapteurLatitude; j++) {
-                if(distanceDeuxPointsTerre(i, j, centreCapteurLatitude, centreCapteurLongitude)<=rayonMesureCapteur) {
-                    if(distanceDeuxPointsTerre(i, j, rayonTailleTab, rayonTailleTab)<=rayonTailleTab) {
+                if(pow(i-centreCapteurLongitude,2)+pow(j-centreCapteurLatitude,2)<=pow(rayonMesureCapteur,2)) {
+                    if(pow(i-rayonTailleTab,2)+pow(j-rayonTailleTab,2)<=pow(rayonTailleTab,2)) {
                         if(!carte[j][i]) {
-                            carte[j][i]=true;
+                            carte[j][i] = true;
                             compteurPresenceCapteur++;
                         }
                     }
@@ -220,7 +220,6 @@ double Service:: obtenirDensiteRegion(list<Capteur> listeDesCapteurs, double lon
 
     double compteurZoneRegion=pow(tailleCarte/2,2)*M_PI;
     double densite = 100*compteurPresenceCapteur/compteurZoneRegion;
-    cout << "densité est " << densite << endl;
     for (int i = 0; i < tailleCarte; i++) {
         delete[] carte[i];
     }
@@ -235,7 +234,7 @@ void Service::calculerMoyenneQualiteAir(double longitude, double latitude, doubl
     for (double & i : moyenne) {
         i = 0;
     }
-    double rayonMesureCapteur = 0.4;
+    double rayonMesureCapteur = 25;
     list<Capteur> capteursProches = obtenirCapteursRegion(longitude, latitude, dateDebut, dateFin, 0, rayon + rayonMesureCapteur);
     if(capteursProches.empty()){
         cerr << "Aucune donnée dans la zone ou au cours de la période sélectionnée" << endl;
@@ -262,9 +261,9 @@ void Service::calculerMoyenneQualiteAir(double longitude, double latitude, doubl
     int indiceRegion = (*mesureMoyenne).calculerIndice();
 
     double densite = obtenirDensiteRegion(capteursProches,longitude,latitude,rayon,rayonMesureCapteur);
-    if(densite > 0.5){
-        cout << "L'indice ATMO dans la région est de "<< indiceRegion << endl;
+    if(densite > 30){
+        cout << "L'indice ATMO dans la région est de "<< indiceRegion << "(la zone sélectionnée est recouverte par les capteurs à " << densite << "%)." << endl;
     }else{
-        cout << "Attention, la zone sélectionnée n'est couverte par les capteurs qu'à " << densite*100 <<"%. La moyenne est de " << indiceRegion <<"." << endl;
+        cout << "Attention, la zone sélectionnée n'est couverte par les capteurs qu'à " << densite <<"%. L'indice ATMO dans la région est de " << indiceRegion <<"." << endl;
     }
 }

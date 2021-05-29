@@ -6,7 +6,6 @@
 #include <cstdlib>
 #include <stdio.h>
 #include <chrono>
-#include <cmath>
 
 using namespace std;
 using std::chrono::high_resolution_clock;
@@ -188,8 +187,6 @@ void effectuerMoyenne(){
 
 void menuGeneral()
 {
-    cout << service.distanceDeuxPointsTerre(44.4, 0.1, 44.4, 0.8) << endl;
-
     char choix_user;
     double donnee_user;
 
@@ -212,7 +209,7 @@ void menuGeneral()
                 break;
             case '1' : {
                 auto t1 = high_resolution_clock::now();
-                service.calculerMoyenneQualiteAir(2.5, 46.5, 3.0, "2019-01-01", "2019-01-05");
+                service.calculerMoyenneQualiteAir(2, 44, 300, "2019-01-01", "2019-01-05");
                 auto t2 = high_resolution_clock::now();
                 auto ms_int = duration_cast<milliseconds>(t2 - t1);
                 std::cout << "Le calcul de l'indice de qualité de l'air a pris " << ms_int.count() << " ms\n";
@@ -249,26 +246,12 @@ int main(int argc, char *argv[]) {
     int nonFiables = 0;
 
     for (auto &capteur : service.getListeCapteurs()) {
-        //cout << capteur << endl;
         if (!capteur.getFiable()) {
             nonFiables++;
-            cout << capteur << endl;
         }
-        //capteur.afficherListeMesures();
-        /*
-        for (auto & mesure : capteur.getListeMesures()) {
-            cout << capteur.getId() <<";" << mesure.getDateMesure() << ";" << mesure.calculerIndice() << endl;
-        }
-         */
     }
 
     cout << nonFiables << " capteurs non fiables" << endl;
-    /*
-    for(auto & user : service.getListeUtilisateurs()) {
-        cout << user << endl;
-        user.afficherCapteurs();
-    }
-     */
     menuGeneral();
 
     return 0;
