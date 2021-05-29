@@ -221,11 +221,11 @@ void testerObtenirCapteursRegion(){
     }
     cout << "-------------------------------------------------------------------" << endl << endl << endl << endl;
 }
-
+/*
 int main() {
     testerCalculerIndice();
     testerObtenirMesureDate();
     testerObtenirMoyenne();
     testerObtenirCapteursRegion();
     return 0;
-}
+}*/

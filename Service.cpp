@@ -37,15 +37,11 @@ void Service::verifierFonctionnementCapteur() {
     double moyenneDateTab[4];
     int nombreDonneesComparaison;
     const int differencePourFiabilite = 2;
-    const double rayonVerification = 0.75;
+    const double rayonVerification = 65;
     const int nbVoisinsRequis = 2;
     Mesure *mesureMoyenne;
     list<Capteur> capteursProches;
-    using std::chrono::high_resolution_clock;
-    using std::chrono::duration_cast;
-    using std::chrono::milliseconds;
 
-    //auto t1 = high_resolution_clock::now();
     for (auto & capteur : listeCapteurs) {
 
         for (auto &capteur2 : listeCapteurs) {
@@ -100,9 +96,6 @@ void Service::verifierFonctionnementCapteur() {
         }
         capteursProches.clear();
     }
-    //auto t2 = high_resolution_clock::now();
-    //auto ms_int = duration_cast<milliseconds>(t2 - t1);
-    //std::cout << ms_int.count() << "ms\n";
 }
 
 
@@ -170,8 +163,18 @@ double Service:: obtenirDensiteRegion(list<Capteur> listeDesCapteurs, double lon
     int rayonTailleTab = rayonRegion*pow(10,precision);
 
     for (auto & capteur : listeDesCapteurs){
-        centreCapteurLongitude = (capteur.getLongitude()-(longitude-rayonRegion))*pow(10, precision);
-        centreCapteurLatitude = (capteur.getLatitude()-(latitude-rayonRegion))*pow(10, precision);
+        if(capteur.getLongitude() < longitude) {
+            centreCapteurLongitude = (rayonRegion - distanceDeuxPointsTerre(0, capteur.getLongitude(), 0,longitude))*pow(10, precision);
+        } else {
+            centreCapteurLongitude = (rayonRegion + distanceDeuxPointsTerre(0, capteur.getLongitude(), 0,longitude))*pow(10, precision);
+        }
+
+        if(capteur.getLatitude() < latitude) {
+            centreCapteurLatitude = (rayonRegion - distanceDeuxPointsTerre(capteur.getLatitude(), 0, latitude, 0))*pow(10, precision);
+        } else {
+            centreCapteurLatitude = (rayonRegion + distanceDeuxPointsTerre(capteur.getLatitude(), 0, latitude, 0))*pow(10, precision);
+        }
+
         debutMesureCapteurLongitude = centreCapteurLongitude - rayonMesureCapteur;
         if(debutMesureCapteurLongitude<0) {
             debutMesureCapteurLongitude=0;
@@ -192,8 +195,8 @@ double Service:: obtenirDensiteRegion(list<Capteur> listeDesCapteurs, double lon
 
         for(int i=debutMesureCapteurLongitude; i<finMesureCapteurLongitude; i++) {
             for(int j=debutMesureCapteurLatitude; j<finMesureCapteurLatitude; j++) {
-                if(pow(i-centreCapteurLongitude,2)+pow(j-centreCapteurLatitude,2)<=pow(rayonMesureCapteur,2)) {
-                    if(pow(i-rayonTailleTab,2)+pow(j-rayonTailleTab,2)<=pow(rayonTailleTab,2)) {
+                if(distanceDeuxPointsTerre(i, j, centreCapteurLatitude, centreCapteurLongitude)<=rayonMesureCapteur) {
+                    if(distanceDeuxPointsTerre(i, j, rayonTailleTab, rayonTailleTab)<=rayonTailleTab) {
                         if(!carte[j][i]) {
                             carte[j][i]=true;
                             compteurPresenceCapteur++;

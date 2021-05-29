@@ -100,7 +100,7 @@ string& Mesure::getDateMesure(){
     return dateMesure;
 }
 
-ostream &operator<<(ostream &os, const Mesure::Mesure &mesure) {
+ostream &operator<<(ostream &os, const Mesure &mesure) {
     os << "id: " << mesure.id << " dateMesure: " << mesure.dateMesure << " ozone: " << mesure.ozone << " dioxydeAzote: "
        << mesure.dioxydeAzote << " dioxydeSoufre: " << mesure.dioxydeSoufre << " particulesFines: "
        << mesure.particulesFines;

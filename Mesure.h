@@ -36,9 +36,6 @@ public:
 
     friend ostream &operator<<(ostream &os, const Mesure &mesure);
 
-    bool operator==(const Mesure &rhs) const;
-
-    bool operator!=(const Mesure &rhs) const;
 
 private:
     string id;

@@ -1,4 +1,3 @@
-
 #include <iostream>
 #include <string>
 #include "Service.h"
@@ -6,9 +5,12 @@
 #include <cstdio>
 #include <cstdlib>
 #include <stdio.h>
+#include <chrono>
 
 using namespace std;
-
+using std::chrono::high_resolution_clock;
+using std::chrono::duration_cast;
+using std::chrono::milliseconds;
 
 Service service = Service();
 
@@ -185,6 +187,9 @@ void effectuerMoyenne(){
 
 void menuGeneral()
 {
+    //cout << sin(90) << endl;
+    cout << service.distanceDeuxPointsTerre(0.5, 45.2, 1.7, 44.6) << endl;
+
     char choix_user;
     double donnee_user;
 
@@ -205,18 +210,22 @@ void menuGeneral()
             case '0' :
                 cout<<"A bientôt !"<<endl;
                 break;
-            case '1' :
+            case '1' : {
+                auto t1 = high_resolution_clock::now();
                 service.calculerMoyenneQualiteAir(2.5, 46.5, 3.0, "2019-01-01", "2019-01-05");
+                auto t2 = high_resolution_clock::now();
+                auto ms_int = duration_cast<milliseconds>(t2 - t1);
+                std::cout << "Le calcul de l'indice de qualité de l'air a pris " << ms_int.count() << " ms\n";
                 //effectuerMoyenne();
                 break;
-
+            }
             default : //si l'utilisateur a rentré n'importe quoi
                 cout << "Votre choix est incorrect. Pour rappel, vous avez ces possibilités: 0,1"<<endl;
         }
     }while (choix_user !='0');
 } //-------------------------------------------------------------------------- Fin de menuGénéral
 
-/*
+
 int main(int argc, char *argv[]) {
     if((argc==3 && string(argv[2]) != "--test") || (argc!=2 && argc !=3)) {
         cerr << "Problème de lecture des données, merci de vérifier le chemin d'accès et son contenu\n"
@@ -231,7 +240,11 @@ int main(int argc, char *argv[]) {
     }
     cout << "Données ajoutées avec succés!" << endl;
 
+    auto t1 = high_resolution_clock::now();
     service.verifierFonctionnementCapteur();
+    auto t2 = high_resolution_clock::now();
+    auto ms_int = duration_cast<milliseconds>(t2 - t1);
+    std::cout << "Temps d'exécution vérifierFonctionnement() : " << ms_int.count() << " ms\n";
 
     int nonFiables = 0;
 
@@ -246,6 +259,7 @@ int main(int argc, char *argv[]) {
         for (auto & mesure : capteur.getListeMesures()) {
             cout << capteur.getId() <<";" << mesure.getDateMesure() << ";" << mesure.calculerIndice() << endl;
         }
+         */
     }
 
     cout << nonFiables << " capteurs non fiables" << endl;
@@ -254,8 +268,8 @@ int main(int argc, char *argv[]) {
         cout << user << endl;
         user.afficherCapteurs();
     }
+     */
     menuGeneral();
 
     return 0;
 }
-*/

@@ -84,10 +84,12 @@ bool Capteur::operator==(const Capteur &rhs) const {
            longitude == rhs.longitude;
 }
 
-
 string& Capteur::getId() {
-    return capteurID;
+        return capteurID;
+
 }
+
+
 bool Capteur::getFiable() {
     return fiable;
 }
