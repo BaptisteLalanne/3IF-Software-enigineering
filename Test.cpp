@@ -167,9 +167,9 @@ void testerObtenirCapteursRegion(){
     service.getListeCapteurs().push_back(c1);
     service.getListeCapteurs().push_back(c2);
     service.getListeCapteurs().push_back(c3);
-    double latitude[3] = {46.5,46.5,44.1};
-    double longitude[3] = {2.5,2.5,2.5};
-    double rayonMax[3]={3.0,0.7,0.0};
+    double longitude[3] = {46.5,46.5,44.1};
+    double latitude[3] = {2.5,2.5,2.5};
+    double rayonMax[3]={3.0,0.7,0.1};
     list<Capteur> listeTest1;
     list<Capteur> listeTest2;
     list<Capteur> listeTest3; //liste vide
@@ -201,7 +201,6 @@ void testerObtenirCapteursRegion(){
                 it_sousliste++;
             }
         }
-        it++;
         if(!testsValides) {
             allTestsValides = false;
             cerr << "Resultat erroné pour la détermination des capteurs proches" << endl
@@ -212,6 +211,8 @@ void testerObtenirCapteursRegion(){
             afficherListe((*it));
             cerr << endl;
         }
+
+        it++;
     }
     if (!allTestsValides){
         cout<<"Tests unitaires obtenirCapteursRegion incorrect"<<endl << endl;

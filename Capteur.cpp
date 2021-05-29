@@ -83,3 +83,47 @@ bool Capteur::operator==(const Capteur &rhs) const {
     return latitude == rhs.latitude &&
            longitude == rhs.longitude;
 }
+
+
+string& Capteur::getId() {
+    return capteurID;
+}
+bool Capteur::getFiable() {
+    return fiable;
+}
+
+double Capteur::getLongitude() {
+    return longitude;
+}
+
+double Capteur::getLatitude(){
+    return latitude;
+}
+
+string& Capteur::getPremiereMesure(){
+    return premiereMesure;
+}
+
+string& Capteur::getDerniereMesure() {
+    return derniereMesure;
+}
+
+void Capteur::setUtilisateur(Utilisateur * utilisateur) {
+    utilisateurPrive = utilisateur;
+}
+
+void Capteur::setDerniereMesure(string &derniereMes) {
+    derniereMesure = derniereMes;
+}
+
+void Capteur::addMesure(Mesure &mesure) {
+    listeMesures.push_back(mesure);
+}
+
+list<Mesure>& Capteur::getListeMesures() {
+    return listeMesures;
+}
+
+Utilisateur* Capteur::getUtilisateurPrive(){
+    return utilisateurPrive;
+}

@@ -18,9 +18,7 @@ public:
     // Contrat :
     //
 
-    void empecherGagnerPoints() {
-        gagnePoints = false;
-    }
+    void empecherGagnerPoints();
 //-------------------------------------------- Constructeurs - destructeur
 
 

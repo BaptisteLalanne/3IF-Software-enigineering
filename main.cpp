@@ -206,7 +206,7 @@ void menuGeneral()
                 cout<<"A bientôt !"<<endl;
                 break;
             case '1' :
-                service.calculerMoyenneQualiteAir(2.0, 44.0, 1.2, "2019-01-01", "2019-01-04");
+                service.calculerMoyenneQualiteAir(2.5, 46.5, 3.0, "2019-01-01", "2019-01-05");
                 //effectuerMoyenne();
                 break;
 
@@ -216,7 +216,7 @@ void menuGeneral()
     }while (choix_user !='0');
 } //-------------------------------------------------------------------------- Fin de menuGénéral
 
-
+/*
 int main(int argc, char *argv[]) {
     if((argc==3 && string(argv[2]) != "--test") || (argc!=2 && argc !=3)) {
         cerr << "Problème de lecture des données, merci de vérifier le chemin d'accès et son contenu\n"
@@ -245,7 +245,7 @@ int main(int argc, char *argv[]) {
         /*
         for (auto & mesure : capteur.getListeMesures()) {
             cout << capteur.getId() <<";" << mesure.getDateMesure() << ";" << mesure.calculerIndice() << endl;
-        }*/
+        }
     }
 
     cout << nonFiables << " capteurs non fiables" << endl;
@@ -253,8 +253,9 @@ int main(int argc, char *argv[]) {
     for(auto & user : service.getListeUtilisateurs()) {
         cout << user << endl;
         user.afficherCapteurs();
-    }*/
+    }
     menuGeneral();
 
     return 0;
 }
+*/

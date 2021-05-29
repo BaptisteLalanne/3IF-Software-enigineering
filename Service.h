@@ -50,13 +50,9 @@ public:
     double obtenirDensiteRegion(list<Capteur> listeDesCapteurs,double longitude, double latitude, double rayonRegion, double rayonMesCapteur);
     void verifierFonctionnementCapteur();
     bool comparerDates(const string date1, const string date2);
-    void addListeCapteurs(Capteur & capteur) {
-        listeCapteurs.push_back(capteur);
-    }
+    void addListeCapteurs(Capteur & capteur);
 
-    list<Capteur>& getListeCapteurs() {
-        return listeCapteurs;
-    }
+    list<Capteur>& getListeCapteurs() ;
 
     void addListeUtilisateurs(Utilisateur & utilisateur) {
         listeUtilisateurs.push_back(utilisateur);
@@ -68,9 +64,7 @@ public:
 
     void calculerMoyenneQualiteAir(double longitude, double latitude, double rayon, string dateDebut, string dateFin);
 
-    list<Capteur>
-    obtenirCapteursRegion(double centreRegionLongitude, double centreRegionLatitude, string dateDebut, string dateFin,
-                          double rayonMaxRegion, double rayonMinRegion);
+    list<Capteur> obtenirCapteursRegion(double centreRegionLongitude, double centreRegionLatitude, string dateDebut, string dateFin, double rayonMinRegion, double rayonMaxRegion);
 
     Service ();
 

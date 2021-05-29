@@ -20,48 +20,25 @@ public:
 
     void desactiverCapteur();
 
-    string& getId() {
-        return capteurID;
-    }
-    bool getFiable() {
-        return fiable;
-    }
+    string& getId() ;
+    bool getFiable() ;
 
-    double getLongitude() {
-        return longitude;
-    }
+    double getLongitude() ;
 
-    double getLatitude(){
-        return latitude;
-    }
+    double getLatitude();
 
-    string& getPremiereMesure(){
-        return premiereMesure;
-    }
+    string& getPremiereMesure();
 
-    string& getDerniereMesure() {
-        return derniereMesure;
-    }
+    string& getDerniereMesure();
 
-    void setUtilisateur(Utilisateur * utilisateur) {
-        utilisateurPrive = utilisateur;
-    }
+    void setUtilisateur(Utilisateur * utilisateur);
 
-    void setDerniereMesure(string &derniereMes) {
-        derniereMesure = derniereMes;
-    }
+    void setDerniereMesure(string &derniereMes);
 
-    void addMesure(Mesure &mesure) {
-        listeMesures.push_back(mesure);
-    }
+    void addMesure(Mesure &mesure);
+    list<Mesure>& getListeMesures();
 
-    list<Mesure>& getListeMesures() {
-        return listeMesures;
-}
-
-    Utilisateur* getUtilisateurPrive(){
-        return utilisateurPrive;
-    }
+    Utilisateur* getUtilisateurPrive();
 
     Capteur(const string &capteurId, double longitude, double latitude, const string &premiereMesure);
 

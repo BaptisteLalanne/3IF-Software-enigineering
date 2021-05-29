@@ -20,6 +20,11 @@ Utilisateur::~Utilisateur ( )
 void Utilisateur::donnerPoints(){
     points++;
 }
+
+void Utilisateur::empecherGagnerPoints() {
+    gagnePoints = false;
+}
+
 void Utilisateur::addCapteur(Capteur & capteur) {
     listeCapteurs.push_back(capteur);
     capteur.setUtilisateur(this);

@@ -9,47 +9,27 @@ class Mesure
 public:
     int calculerIndice();
 
-    const string &getId() const {
-        return id;
-    }
+    const string &getId() const ;
 
-    void setDateMesure(const string &dateMesure) {
-        cout << dateMesure << endl;
-    }
+    void setDateMesure(const string &dateMesure);
 
-    double getOzone() const {
-        return ozone;
-    }
+    double getOzone() const ;
 
-    void setOzone(double ozone) {
-        this->ozone = ozone;
-    }
+    void setOzone(double ozone);
 
-    double getDioxydeAzote() const{
-        return dioxydeAzote;
-    }
+    double getDioxydeAzote() const;
 
-    void setDioxydeAzote(double dioxydeAzote) {
-        this->dioxydeAzote = dioxydeAzote;
-    }
+    void setDioxydeAzote(double dioxydeAzote);
 
-    double getDioxydeSoufre() const{
-            return dioxydeSoufre;
-    }
+    double getDioxydeSoufre() const;
 
-    void setParticulesFines(double particulesFines) {
-        this->particulesFines = particulesFines;
-    }
+    void setParticulesFines(double particulesFines);
 
-    double getParticulesFines() const{
-        return particulesFines;
-    }
+    double getParticulesFines() const;
 
     virtual ~Mesure();
 
-    string& getDateMesure(){
-        return dateMesure;
-    }
+    string& getDateMesure();
 
     Mesure();
     Mesure(const string &laDate, string idMesure, double concentrationOzone, double concentrationDioxydeSoufre, double concentrationDioxydeAzote, double concentrationPM);

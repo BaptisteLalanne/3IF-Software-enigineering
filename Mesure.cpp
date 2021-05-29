@@ -59,7 +59,48 @@ int Mesure::calculerIndice() {
 
 }
 
-ostream &operator<<(ostream &os, const Mesure &mesure) {
+
+const string& Mesure::getId() const {
+    return id;
+}
+
+void Mesure::setDateMesure(const string &dateMesure) {
+    cout << dateMesure << endl;
+}
+
+double Mesure::getOzone() const {
+    return ozone;
+}
+
+void Mesure::setOzone(double ozone) {
+    this->ozone = ozone;
+}
+
+double Mesure::getDioxydeAzote() const{
+    return dioxydeAzote;
+}
+
+void Mesure::setDioxydeAzote(double dioxydeAzote) {
+    this->dioxydeAzote = dioxydeAzote;
+}
+
+double Mesure::getDioxydeSoufre() const{
+    return dioxydeSoufre;
+}
+
+void Mesure::setParticulesFines(double particulesFines) {
+    this->particulesFines = particulesFines;
+}
+
+double Mesure::getParticulesFines() const{
+    return particulesFines;
+}
+
+string& Mesure::getDateMesure(){
+    return dateMesure;
+}
+
+ostream &operator<<(ostream &os, const Mesure::Mesure &mesure) {
     os << "id: " << mesure.id << " dateMesure: " << mesure.dateMesure << " ozone: " << mesure.ozone << " dioxydeAzote: "
        << mesure.dioxydeAzote << " dioxydeSoufre: " << mesure.dioxydeSoufre << " particulesFines: "
        << mesure.particulesFines;
