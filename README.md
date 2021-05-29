@@ -27,7 +27,7 @@ Différentes commandes sont utilisables dans le make:
 
 ## Utilisation des tests
 
-***Pour utiliser les tests, il faut au préalable créer l'executable***
+***Pour utiliser les tests, il faut au préalable créer l'executable (via make par exemple)***
 ```sh
 make
 cd Tests
