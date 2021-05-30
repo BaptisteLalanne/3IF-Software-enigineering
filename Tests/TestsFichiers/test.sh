@@ -117,36 +117,7 @@ fi
 
 # compare files created if concerned
 resultFiles=2
-if ls *.outfile &> /dev/null
-then
-  number=1
-  for i in *.outfile
-  do
-    fileName=`basename $i .outfile`
-    if [ -r $fileName ]
-    then
-      diff -wB $i $fileName
-      if [ $? -eq 0 ]
-      then
-        echo "                                       File #$number     : PASSED"
-      else
-        echo "                                       File #$number     : FAILED"
-        resultFiles=0
-        resultGlobal=0
-      fi  
-      rm $fileName
-    else  
-      echo "                                       File #$number     : FAILED"
-      resultFiles=0
-      resultGlobal=0
-    fi
-    let "number=$number+1"
-  done
-  if [ $resultFiles -eq 2 ]
-  then
-    resultFiles=1
-  fi
-fi
+
 
 echo "                                       --------------------"
 if [ $resultGlobal -eq 0 ]
