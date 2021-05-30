@@ -1,28 +1,25 @@
 using namespace std;
+
 #include <iostream>
 #include <algorithm>
 #include <cstring>
-
 #include "Capteur.h"
 
-Capteur::Capteur(const string &capteurId, double longitude, double latitude, const string &premiereMesure) : capteurID(capteurId), fiable(true),
-                                                                                                            longitude(longitude), latitude(latitude),
-                                                                                                            utilisateurPrive(nullptr),
-                                                                                                            premiereMesure(premiereMesure),
-                                                                                                            derniereMesure(""){}
+Capteur::Capteur(const string &capteurId, double longitude, double latitude, const string &premiereMesure) : capteurID(
+        capteurId), fiable(true), longitude(longitude), latitude(latitude), utilisateurPrive(nullptr), premiereMesure(
+        premiereMesure), derniereMesure("") {}
 
 
-Capteur::~Capteur ( )
-{
+Capteur::~Capteur() {
 }
 
 void Capteur::desactiverCapteur() {
     fiable = false;
 }
 
-double* Capteur::obtenirMoyenne(string &dateDebut, string &dateFin) {
+double *Capteur::obtenirMoyenne(string &dateDebut, string &dateFin) {
     static double moyenne[4];
-    for (double & i : moyenne) {
+    for (double &i : moyenne) {
         i = 0;
     }
 
@@ -30,7 +27,7 @@ double* Capteur::obtenirMoyenne(string &dateDebut, string &dateFin) {
 
     list<Mesure>::iterator it = listeMesures.begin();
 
-    while(it!=listeMesures.end() && strcmp((it->getDateMesure()).c_str(), dateDebut.c_str()) < 0) {
+    while (it != listeMesures.end() && strcmp((it->getDateMesure()).c_str(), dateDebut.c_str()) < 0) {
         it++;
     }
 
@@ -44,9 +41,9 @@ double* Capteur::obtenirMoyenne(string &dateDebut, string &dateFin) {
     }
 
     int i;
-    if(nbMesures!=0) {
-                for (i = 0; i<4; i++) {
-                moyenne[i] /= nbMesures;
+    if (nbMesures != 0) {
+        for (i = 0; i < 4; i++) {
+            moyenne[i] /= nbMesures;
         }
 
     }
@@ -55,10 +52,10 @@ double* Capteur::obtenirMoyenne(string &dateDebut, string &dateFin) {
     return moyenne;
 }
 
-Mesure* Capteur::obtenirMesureDate(string & date) {
+Mesure *Capteur::obtenirMesureDate(string &date) {
     //auto it = std::find_if(listeMesures.begin(), listeMesures.end(), [](Mesure & obj, string & date){return obj.getDateMesure() == date;});
-    for (auto & mesure : listeMesures) {
-        if(mesure.getDateMesure() == date) {
+    for (auto &mesure : listeMesures) {
+        if (mesure.getDateMesure() == date) {
             return &mesure;
         }
     }
@@ -68,14 +65,8 @@ Mesure* Capteur::obtenirMesureDate(string & date) {
 ostream &operator<<(ostream &os, const Capteur &capteur) {
     os << "capteurID: " << capteur.capteurID << " fiable: " << capteur.fiable << " longitude: " << capteur.longitude
        << " latitude: " << capteur.latitude << " utilisateurPrive: " << capteur.utilisateurPrive << " premiereMesure: "
-       << capteur.premiereMesure  << " derniereMesure: " << capteur.derniereMesure;
+       << capteur.premiereMesure << " derniereMesure: " << capteur.derniereMesure;
     return os;
-}
-
-void Capteur::afficherListeMesures() {
-    for(list<Mesure>::iterator it = listeMesures.begin(); it != listeMesures.end(); it++) {
-        cout << *it << endl;
-    }
 }
 
 bool Capteur::operator==(const Capteur &rhs) const {
@@ -84,8 +75,8 @@ bool Capteur::operator==(const Capteur &rhs) const {
            longitude == rhs.longitude;
 }
 
-string& Capteur::getId() {
-        return capteurID;
+string &Capteur::getId() {
+    return capteurID;
 
 }
 
@@ -98,19 +89,19 @@ double Capteur::getLongitude() {
     return longitude;
 }
 
-double Capteur::getLatitude(){
+double Capteur::getLatitude() {
     return latitude;
 }
 
-string& Capteur::getPremiereMesure(){
+string &Capteur::getPremiereMesure() {
     return premiereMesure;
 }
 
-string& Capteur::getDerniereMesure() {
+string &Capteur::getDerniereMesure() {
     return derniereMesure;
 }
 
-void Capteur::setUtilisateur(Utilisateur * utilisateur) {
+void Capteur::setUtilisateur(Utilisateur *utilisateur) {
     utilisateurPrive = utilisateur;
 }
 
@@ -122,10 +113,10 @@ void Capteur::addMesure(Mesure &mesure) {
     listeMesures.push_back(mesure);
 }
 
-list<Mesure>& Capteur::getListeMesures() {
+list<Mesure> &Capteur::getListeMesures() {
     return listeMesures;
 }
 
-Utilisateur* Capteur::getUtilisateurPrive(){
+Utilisateur *Capteur::getUtilisateurPrive() {
     return utilisateurPrive;
 }

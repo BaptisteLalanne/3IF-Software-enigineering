@@ -1,6 +1,23 @@
+Acces aux donnees...
+Donnees ajoutees avec succes!
+4 capteurs non fiables detectes
+
+Bienvenue dans le Menu Principal !
+
+---------------------------MENU---------------------------
+Choississez parmi les propositions suivantes
+1: Calculer moyenne de la qualite de l'air dans une region
+0: Quitter
+Votre choix : ----------------------------------------------------------
+
 Veuillez-renseigner les informations suivantes:
-Latitude :
-Longitude :
-Rayon :
-Date de début :
-Date de fin :
+Longitude : Latitude : Rayon (km) : Date de debut (AAAA-MM-JJ) : Date de fin (AAAA-MM-JJ) :
+Aucune donnee dans la zone ou au cours de la periode selectionnee.
+
+---------------------------MENU---------------------------
+Choississez parmi les propositions suivantes
+1: Calculer moyenne de la qualite de l'air dans une region
+0: Quitter
+Votre choix : ----------------------------------------------------------
+
+A bientot !
