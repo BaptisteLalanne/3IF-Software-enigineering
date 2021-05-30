@@ -27,11 +27,11 @@ Différentes commandes sont utilisables dans le make:
 
 ## Utilisation des tests
 
-***Pour utiliser les tests, il faut au préalable créer l'executable (via make par exemple)***
+***Pour utiliser les tests, il faut au préalable créer l'executable (via make par exemple) et avoir les droits sur les fichiers (chmod)***
 ```sh
 make
 cd Tests/TestsFichiers
-sh maketest.sh
+sh mktest.sh
 ```
 Pour observer la validation des tests unitaires et de bout en bout, il est possible d'ouvrir le .csv crée ou tout simplement observé le passage des tests sur le terminal.
 
