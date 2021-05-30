@@ -4,70 +4,62 @@
 #include <list>
 #include <string>
 #include <ostream>
+#include <iostream>
 #include "Mesure.h"
 
 class Utilisateur;
 
-class Capteur
-{
+class Capteur {
 
 public:
 
-    Mesure* obtenirMesureDate(string &date) const;
+    Mesure *obtenirMesureDate(string &date);
 
-    double* obtenirMoyenne(string &dateDebut, string &dateFin) const;
+    double *obtenirMoyenne(string &dateDebut, string &dateFin);
 
     void desactiverCapteur();
 
-    string getId() {
-        return capteurID;
-    }
+    string &getId();
 
-    double getLongitude() {
-        return longitude;}
+    bool getFiable();
 
+    double getLongitude();
 
-        double getLatitude(){
-        return latitude;
-    }
+    double getLatitude();
 
-    void setUtilisateur(Utilisateur * utilisateur) {
-        utilisateurPrive = utilisateur;
-    }
+    string &getPremiereMesure();
 
-    void setDerniereMesure(string &derniereMes) {
-        derniereMesure = derniereMes;
-    }
+    string &getDerniereMesure();
 
-    void addMesure(Mesure &mesure) {
-        listeMesures.push_back(mesure);
-    }
+    void setUtilisateur(Utilisateur *utilisateur);
 
-    list<Mesure>& getListeMesures() {
-        return listeMesures;
-}
+    void setDerniereMesure(string &derniereMes);
 
-    Utilisateur* getUtilisateurPrive(){
-        return utilisateurPrive;
-    }
+    void addMesure(Mesure &mesure);
+
+    list <Mesure> &getListeMesures();
+
+    Utilisateur *getUtilisateurPrive();
 
     Capteur(const string &capteurId, double longitude, double latitude, const string &premiereMesure);
 
-    virtual ~Capteur ( );
+    virtual ~Capteur();
 
     friend ostream &operator<<(ostream &os, const Capteur &capteur);
 
-    void afficherListeMesures();
+    bool operator==(const Capteur &rhs) const;
 
 private:
     string capteurID;
     bool fiable;
     double longitude;
     double latitude;
-    Utilisateur * utilisateurPrive;
+    Utilisateur *utilisateurPrive;
     string premiereMesure;
     string derniereMesure;
-    list<Mesure> listeMesures;
+    list <Mesure> listeMesures;
+
+
 };
 
 #endif

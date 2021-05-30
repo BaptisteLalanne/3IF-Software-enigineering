@@ -1,1 +1,1 @@
-../../main "../bad-path"
+../../../airwatcher ../bad-path

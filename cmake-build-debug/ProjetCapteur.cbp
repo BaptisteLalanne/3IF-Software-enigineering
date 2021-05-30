@@ -98,6 +98,9 @@
 		<Unit filename="C:/Users/Rami EL RIFAI/Desktop/INSA Lyon/IF/GL/ProjetCapteur/Service.h">
 			<Option target="ProjetCapteur"/>
 		</Unit>
+		<Unit filename="C:/Users/Rami EL RIFAI/Desktop/INSA Lyon/IF/GL/ProjetCapteur/Test.cpp">
+			<Option target="ProjetCapteur"/>
+		</Unit>
 		<Unit filename="C:/Users/Rami EL RIFAI/Desktop/INSA Lyon/IF/GL/ProjetCapteur/Utilisateur.cpp">
 			<Option target="ProjetCapteur"/>
 		</Unit>

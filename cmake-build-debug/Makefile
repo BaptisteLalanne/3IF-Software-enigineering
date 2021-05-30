@@ -223,6 +223,33 @@ Service.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\ProjetCapteur.dir\build.make CMakeFiles/ProjetCapteur.dir/Service.cpp.s
 .PHONY : Service.cpp.s
 
+Test.obj: Test.cpp.obj
+
+.PHONY : Test.obj
+
+# target to build an object file
+Test.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\ProjetCapteur.dir\build.make CMakeFiles/ProjetCapteur.dir/Test.cpp.obj
+.PHONY : Test.cpp.obj
+
+Test.i: Test.cpp.i
+
+.PHONY : Test.i
+
+# target to preprocess a source file
+Test.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\ProjetCapteur.dir\build.make CMakeFiles/ProjetCapteur.dir/Test.cpp.i
+.PHONY : Test.cpp.i
+
+Test.s: Test.cpp.s
+
+.PHONY : Test.s
+
+# target to generate assembly for a file
+Test.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\ProjetCapteur.dir\build.make CMakeFiles/ProjetCapteur.dir/Test.cpp.s
+.PHONY : Test.cpp.s
+
 Utilisateur.obj: Utilisateur.cpp.obj
 
 .PHONY : Utilisateur.obj
@@ -295,6 +322,9 @@ help:
 	@echo ... Service.obj
 	@echo ... Service.i
 	@echo ... Service.s
+	@echo ... Test.obj
+	@echo ... Test.i
+	@echo ... Test.s
 	@echo ... Utilisateur.obj
 	@echo ... Utilisateur.i
 	@echo ... Utilisateur.s

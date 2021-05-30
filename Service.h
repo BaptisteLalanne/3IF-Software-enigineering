@@ -1,83 +1,46 @@
-
-/*************************************************************************
-                           Service  -  description
-                             -------------------
-    début                : 04/05/21
-    copyright            : (C) 2021 par Lalanne Baptiste, El Rifai Rami,
-	                 Rossello-Poulet Arthur, Bois Capucine
-*************************************************************************/
-
-//---------- Interface de la classe <Service> (fichier Service.h) ----------------
 #ifndef PROJETCAPTEUR_SERVICE_H
 #define PROJETCAPTEUR_SERVICE_H
-#include <list>
 
-//--------------------------------------------------- Interfaces utilisées
+#include <list>
 #include "Capteur.h"
 #include "Mesure.h"
 #include "Utilisateur.h"
+#include <iostream>
 
-//------------------------------------------------------------- Constantes
+using namespace std;
 
-//------------------------------------------------------------------ Types
-
-//------------------------------------------------------------------------
-// Rôle de la classe <Service>
-//
-//
-//------------------------------------------------------------------------
-
-class Service
-{
-//----------------------------------------------------------------- PUBLIC
+class Service {
 
 public:
-//----------------------------------------------------- Méthodes publiques
-/*
-    void seConnecter(string utilisateurID);
 
+    double distanceDeuxPointsTerre(double latitudeA, double longitudeA, double latitudeB, double longitudeB);
 
+    double obtenirDensiteRegion(list<Capteur> listeDesCapteurs, double longitude, double latitude, double rayonRegion,
+                                double rayonMesCapteur);
 
-    int calculerMoyenneQualiteAir(double Longitude, double Latitude, double rayon, string dateDebut, string dateFin);
+    void verifierFonctionnementCapteur();
 
+    void addListeCapteurs(Capteur &capteur);
 
-    list<Capteur> obtenirCapteursRegion(double longitude, double latitude, string dateDeb, string dateFin, double rayonMax, double rayonMin);
+    list<Capteur> &getListeCapteurs();
 
-    double obtenirDensiteRegion(list<Capteur> listeCapteurs, double longitude, double latitude);
-*/
+    void addListeUtilisateurs(Utilisateur &utilisateur);
 
-    //void verifierFonctionnementCapteur();
-    void addListeCapteurs(Capteur & capteur) {
-        listeCapteurs.push_back(capteur);
-    }
+    void calculerMoyenneQualiteAir(double longitude, double latitude, double rayon, string dateDebut, string dateFin);
 
-    list<Capteur>& getListeCapteurs() {
-        return listeCapteurs;
-    }
+    list<Capteur>
+    obtenirCapteursRegion(double centreRegionLongitude, double centreRegionLatitude, string dateDebut, string dateFin,
+                          double rayonMinRegion, double rayonMaxRegion);
 
-    void addListeUtilisateurs(Utilisateur & utilisateur) {
-        listeUtilisateurs.push_back(utilisateur);
-    }
+    Service();
 
-    list<Utilisateur>& getListeUtilisateurs() {
-        return listeUtilisateurs;
-    }
-
-    Service ();
-
-    virtual ~Service ( );
-
-//------------------------------------------------------------------ PRIVE
+    virtual ~Service();
 
 private:
-//----------------------------------------------------- Méthodes protégées
 
-//----------------------------------------------------- Attributs protégés
     list<Capteur> listeCapteurs;
     list<Utilisateur> listeUtilisateurs;
 
 };
 
-//-------------------------------- Autres définitions dépendantes de <Xxx>
-
-#endif // PROJETCAPTEUR_SERVICE_H
+#endif

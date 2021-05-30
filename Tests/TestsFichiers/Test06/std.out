@@ -1,0 +1,23 @@
+Acces aux donnees...
+Donnees ajoutees avec succes!
+4 capteurs non fiables detectes
+
+Bienvenue dans le Menu Principal !
+
+---------------------------MENU---------------------------
+Choississez parmi les propositions suivantes
+1: Calculer moyenne de la qualite de l'air dans une region
+0: Quitter
+Votre choix : ----------------------------------------------------------
+
+Veuillez-renseigner les informations suivantes:
+Longitude : Latitude : Rayon (km) : Date de debut (AAAA-MM-JJ) : Date de fin (AAAA-MM-JJ) : 
+Attention, la zone selectionnee n'est couverte par les capteurs qu'a 6%. L'indice ATMO dans la region est de 8.
+
+---------------------------MENU---------------------------
+Choississez parmi les propositions suivantes
+1: Calculer moyenne de la qualite de l'air dans une region
+0: Quitter
+Votre choix : ----------------------------------------------------------
+
+A bientot !
