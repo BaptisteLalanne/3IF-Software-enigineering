@@ -31,6 +31,7 @@ clean:
 mproper: clean
 #permet une reconstruction totale du projet, s'assure que tous les fichiers .o ont ete supprimes avant
 	rm -rf $(EXEC)
+	rm -rf $(TEST)
 	clear
 
 run: $(EXEC)
