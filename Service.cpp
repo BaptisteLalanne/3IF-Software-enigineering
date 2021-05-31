@@ -22,6 +22,10 @@ list<Capteur> &Service::getListeCapteurs() {
     return listeCapteurs;
 }
 
+list<Utilisateur> &Service::getListeUtilisateurs() {
+    return listeUtilisateurs;
+}
+
 void Service::addListeUtilisateurs(Utilisateur &utilisateur) {
     listeUtilisateurs.push_back(utilisateur);
 }
@@ -87,6 +91,7 @@ void Service::verifierFonctionnementCapteur() {
                     capteur.desactiverCapteur();
                     if (capteur.getUtilisateurPrive()) {
                         capteur.getUtilisateurPrive()->empecherGagnerPoints();
+                        delete mesureMoyenne;
                         break;
                     }
                 }
@@ -246,6 +251,9 @@ Service::calculerMoyenneQualiteAir(double longitude, double latitude, double ray
             moyenne[i] = moyenne[i] + moyenneTousPolluants[i];
         }
         nombreCapteursValides++;
+        if (capteur.getUtilisateurPrive() != nullptr) {
+            capteur.getUtilisateurPrive()->donnerPoints();
+        }
     }
 
     //On fait la moyenne des concentrations

@@ -27,9 +27,10 @@ void initialiserUser(ifstream &fluxLectureUsers) {
     while (!fluxLectureUsers.eof()) {
         getline(fluxLectureUsers, id, ';');
         Utilisateur user = Utilisateur(beforeId + id);
+        service.addListeUtilisateurs(user);
         getline(fluxLectureUsers, idCapteur, ';');
         while (idCapteur.find("Sensor") != string::npos) {
-            user.addCapteur(*trouverCapteur(idCapteur));
+            service.getListeUtilisateurs().back().addCapteur(*trouverCapteur(idCapteur));
             char c = char(fluxLectureUsers.get());
             if (c == '\n') {
                 beforeId = char(fluxLectureUsers.get());
@@ -39,7 +40,6 @@ void initialiserUser(ifstream &fluxLectureUsers) {
                 idCapteur =  c + idCapteur;
             }
         }
-        service.addListeUtilisateurs(user);
     }
 }
 
@@ -235,7 +235,6 @@ int main(int argc, char *argv[]) {
     }
 
     int nonFiables = 0;
-
     for (auto &capteur : service.getListeCapteurs()) {
         if (!capteur.getFiable()) {
             nonFiables++;

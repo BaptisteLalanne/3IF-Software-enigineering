@@ -4,9 +4,9 @@
 
 
 
-Dans le cadre du projet en Génie Logiciel, nous développons deux fonctionalités d'un programme d'analyse de la polution de l'air.
+Dans le cadre du projet en Génie Logiciel, nous développons deux fonctionnalités d'un programme d'analyse de la pollution de l'air.
 
-Fonctionalités retunues pour ce code:
+Fonctionnalités retenues pour ce code:
 - Vérification des capteurs
 - Calculer indice ATMO dans une région et une période donnée
 
@@ -17,11 +17,11 @@ Fonctionalités retunues pour ce code:
 make run
 ```
 
-Par défaut le makefile prend un fichier avec les différents csv requis dans le dossier actuel "$(PWD)/dataset" 
+Par défaut le makefile prend un fichier avec les différents csv requis dans le dossier actuel "$(PWD)/dataset"
 
 Différentes commandes sont utilisables dans le make:
-- clean 
-- mproper 
+- clean
+- mproper
 - debug (Valgrind)
 
 

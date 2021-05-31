@@ -23,7 +23,9 @@ public:
     void addListeCapteurs(Capteur &capteur);
 
     list<Capteur> &getListeCapteurs();
-
+    
+    list<Utilisateur> &getListeUtilisateurs();
+    
     void addListeUtilisateurs(Utilisateur &utilisateur);
 
     void calculerMoyenneQualiteAir(double longitude, double latitude, double rayon, string dateDebut, string dateFin);
