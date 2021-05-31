@@ -41,7 +41,7 @@ void Service::verifierFonctionnementCapteur() {
     Mesure *moyenneDate;
     double moyenneDateTab[4];
     int nombreDonneesComparaison;
-    const int differencePourFiabilite = 2;
+    const int differencePourFiabilite = 3;
     const double rayonVerification = 90;
     const int nbVoisinsRequis = 3;
     Mesure *mesureMoyenne;
@@ -109,30 +109,32 @@ Service::obtenirCapteursRegion(double centreRegionLongitude, double centreRegion
                                string dateFin, double rayonMinRegion, double rayonMaxRegion) {
     list<double> tableauDistances;
     list<Capteur> listeCapteursRegion;
-    for (auto &capteur : listeCapteurs) {
-        if (capteur.getFiable()) {
-            if (strcmp(capteur.getPremiereMesure().c_str(), dateDebut.c_str()) <= 0 &&
-                strcmp(capteur.getDerniereMesure().c_str(), dateFin.c_str()) >= 0) {
-                double distanceCapteurRegion = distanceDeuxPointsTerre(capteur.getLatitude(), capteur.getLongitude(),
-                                                                       centreRegionLatitude, centreRegionLongitude);
-                if (distanceCapteurRegion >= rayonMinRegion && distanceCapteurRegion <= rayonMaxRegion) {
-                    list<Capteur>::iterator itCapteur = listeCapteursRegion.begin();
-                    list<double>::iterator it;
-                    for (it = tableauDistances.begin(); it != tableauDistances.end(); it++) {
-                        if (tableauDistances.empty() || distanceCapteurRegion < *it) {
-                            tableauDistances.insert(it, distanceCapteurRegion);
-                            listeCapteursRegion.insert(itCapteur, capteur);
-                            break;
-                        }
-                        itCapteur++;
-                    }
-                    if (it == tableauDistances.end()) {
-                        tableauDistances.push_back(distanceCapteurRegion);
-                        listeCapteursRegion.push_back(capteur);
-                    }
-                }
-            }
-        }
+    if (strcmp(dateDebut.c_str(), dateFin.c_str()) <= 0) {
+	    for (auto &capteur : listeCapteurs) {
+		if (capteur.getFiable()) {
+		    if (strcmp(capteur.getPremiereMesure().c_str(), dateDebut.c_str()) <= 0 &&
+		        strcmp(capteur.getDerniereMesure().c_str(), dateFin.c_str()) >= 0) {
+		        double distanceCapteurRegion = distanceDeuxPointsTerre(capteur.getLatitude(), capteur.getLongitude(),
+		                                                               centreRegionLatitude, centreRegionLongitude);
+		        if (distanceCapteurRegion >= rayonMinRegion && distanceCapteurRegion <= rayonMaxRegion) {
+		            list<Capteur>::iterator itCapteur = listeCapteursRegion.begin();
+		            list<double>::iterator it;
+		            for (it = tableauDistances.begin(); it != tableauDistances.end(); it++) {
+		                if (tableauDistances.empty() || distanceCapteurRegion < *it) {
+		                    tableauDistances.insert(it, distanceCapteurRegion);
+		                    listeCapteursRegion.insert(itCapteur, capteur);
+		                    break;
+		                }
+		                itCapteur++;
+		            }
+		            if (it == tableauDistances.end()) {
+		                tableauDistances.push_back(distanceCapteurRegion);
+		                listeCapteursRegion.push_back(capteur);
+		            }
+		        }
+		    }
+		}
+	    }
     }
     return listeCapteursRegion;
 }
@@ -244,9 +246,6 @@ Service::calculerMoyenneQualiteAir(double longitude, double latitude, double ray
             moyenne[i] = moyenne[i] + moyenneTousPolluants[i];
         }
         nombreCapteursValides++;
-        if (capteur.getUtilisateurPrive() != nullptr) {
-            capteur.getUtilisateurPrive()->donnerPoints();
-        }
     }
 
     //On fait la moyenne des concentrations
@@ -265,4 +264,5 @@ Service::calculerMoyenneQualiteAir(double longitude, double latitude, double ray
         cout << "Attention, la zone selectionnee n'est couverte par les capteurs qu'a " << densite
              << "%. L'indice ATMO dans la region est de " << indiceRegion << "." << endl;
     }
+    delete mesureMoyenne;
 }

@@ -3,8 +3,8 @@ using namespace std;
 #include <iostream>
 #include "Utilisateur.h"
 
-Utilisateur::Utilisateur(const string &utilisateurID) {
-    Utilisateur::utilisateurID = utilisateurID;
+Utilisateur::Utilisateur(const string &utilisateurID_) {
+    utilisateurID = utilisateurID_;
     points = 0;
     gagnePoints = true;
 }

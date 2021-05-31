@@ -18,7 +18,7 @@ test: Test.o Capteur.o Mesure.o Service.o Utilisateur.o
 
 
 debug:
-	valgrind ./airwatcher
+	valgrind ./$(EXEC) $(REPO)
 
 .PHONY: clean mproper
 #permet d'assurer la commande make mproper ou make clean meme si un fichier a un tel nom dans le dossier courant
